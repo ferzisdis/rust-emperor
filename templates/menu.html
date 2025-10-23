@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Dark Emperor - Main Menu{% endblock %}
+
+{% block content %}
+<div class="main-menu">
+    <div class="game-header">
+        <h1>🏰 Dark Emperor</h1>
+        <p class="subtitle">Rise from Baron to Emperor</p>
+    </div>
+
+    {% if show_game_over %}
+    <div class="game-over-panel {% if won %}won{% else %}lost{% endif %}">
+        {% if won %}
+        <h2>🎉 Congratulations!</h2>
+        <p class="result-message">You have won!</p>
+        {% else %}
+        <h2>😔 Game Over</h2>
+        <p class="result-message">You have lost!</p>
+        {% endif %}
+        <div class="score-display">
+            <p><strong>Final Score:</strong> {{ score }} points</p>
+            <p><strong>Player:</strong> {{ player_name }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="menu-buttons">
+        <button
+            hx-get="/new-game-form"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="menu-button primary">
+            🎮 Start New Game
+        </button>
+
+        <button
+            hx-get="/highscores"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="menu-button">
+            🏆 Highscores
+        </button>
+
+        <button
+            hx-get="/about"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            class="menu-button">
+            ℹ️ About
+        </button>
+    </div>
+
+    <div class="credits">
+        <p>Original: DarkEmperorMD by Steffen Bott</p>
+        <p>Rust Edition with htmx</p>
+    </div>
+</div>
+
+<div id="main-content"></div>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}{{ state.user_name }} - {{ state.get_grade_title() }} - Year {{ state.year }}{% endblock %}
+
+{% block content %}
+<div class="game-view">
+    <!-- Header with player info -->
+    <div class="game-header">
+        <div class="player-info">
+            <h1>{{ state.get_grade_title() }} {{ state.user_name }}</h1>
+            <p class="year">Year {{ state.year }} | Round {{ state.round }}</p>
+        </div>
+    </div>
+
+    <!-- Resources Bar -->
+    <div class="resources-bar">
+        <div class="resource-item">
+            <span class="resource-icon">💰</span>
+            <span class="resource-label">Gold:</span>
+            <span class="resource-value">{{ state.gold }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🌾</span>
+            <span class="resource-label">Food:</span>
+            <span class="resource-value">{{ state.food_quantity }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">👥</span>
+            <span class="resource-label">Citizens:</span>
+            <span class="resource-value">{{ state.man_quantity }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">⚔️</span>
+            <span class="resource-label">Soldiers:</span>
+            <span class="resource-value">{{ state.soldier_quantity }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">❤️</span>
+            <span class="resource-label">Popularity:</span>
+            <span class="resource-value">{{ state.popularity_percent }}%</span>
+        </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-content">
+        <!-- Castle Display -->
+        <div class="castle-section">
+            <div class="castle-display">
+                <h3>🏰 Castle Level {{ state.castle_level }}</h3>
+                <div class="castle-visual">
+                    {% if state.castle_level == 0 %}
+                    <div class="castle-image">🏚️</div>
+                    {% else if state.castle_level == 1 %}
+                    <div class="castle-image">🏘️</div>
+                    {% else if state.castle_level == 2 %}
+                    <div class="castle-image">🏰</div>
+                    {% else if state.castle_level < 6 %}
+                    <div class="castle-image">🏯</div>
+                    {% else %}
+                    <div class="castle-image">🏛️</div>
+                    {% endif %}
+                </div>
+                {% if state.castle_level < 8 %}
+                <button
+                    hx-post="/game/upgrade-castle"
+                    hx-target="body"
+                    hx-swap="innerHTML"
+                    class="btn btn-upgrade"
+                    {% if !state.can_upgrade_castle() %}disabled{% endif %}>
+                    ⬆️ Upgrade ({{ state.price_for_castle }} gold)
+                </button>
+                {% else %}
+                <p class="max-level">Maximum Level Reached!</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Action Panels -->
+        <div class="action-panels">
+            <!-- Settings Panel -->
+            <div class="panel">
+                <h3>⚙️ Settings</h3>
+                <div class="setting-item">
+                    <label>Taxes:</label>
+                    <select name="taxes_level" hx-post="/game/set-taxes" hx-target="body" hx-swap="innerHTML" class="setting-select">
+                        <option value="0" {% if state.taxes_level == 0 %}selected{% endif %}>None</option>
+                        <option value="1" {% if state.taxes_level == 1 %}selected{% endif %}>Very Low</option>
+                        <option value="2" {% if state.taxes_level == 2 %}selected{% endif %}>Low</option>
+                        <option value="3" {% if state.taxes_level == 3 %}selected{% endif %}>Medium</option>
+                        <option value="4" {% if state.taxes_level == 4 %}selected{% endif %}>High</option>
+                        <option value="5" {% if state.taxes_level == 5 %}selected{% endif %}>Very High</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>Food Rations:</label>
+                    <select name="food_supply" hx-post="/game/set-food-supply" hx-target="body" hx-swap="innerHTML" class="setting-select">
+                        <option value="0" {% if state.food_supply == 0 %}selected{% endif %}>None</option>
+                        <option value="1" {% if state.food_supply == 1 %}selected{% endif %}>Very Low</option>
+                        <option value="2" {% if state.food_supply == 2 %}selected{% endif %}>Low</option>
+                        <option value="3" {% if state.food_supply == 3 %}selected{% endif %}>Medium</option>
+                        <option value="4" {% if state.food_supply == 4 %}selected{% endif %}>High</option>
+                        <option value="5" {% if state.food_supply == 5 %}selected{% endif %}>Very High</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Buildings Panel -->
+            <div class="panel">
+                <h3>🏗️ Buildings</h3>
+                <div class="building-list">
+                    <div class="building-item">
+                        <span class="building-info">
+                            <span class="building-icon">🌾</span>
+                            <span>Farms: {{ state.farm_quantity }}</span>
+                        </span>
+                        <button hx-post="/game/build-farm" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_farm() %}disabled{% endif %}>
+                            Build ({{ state.price_for_farm }} 💰)
+                        </button>
+                    </div>
+                    <div class="building-item">
+                        <span class="building-info">
+                            <span class="building-icon">⛏️</span>
+                            <span>Mines: {{ state.mine_quantity }}</span>
+                        </span>
+                        <button hx-post="/game/build-mine" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_mine() %}disabled{% endif %}>
+                            Build ({{ state.price_for_mine }} 💰)
+                        </button>
+                    </div>
+                    <div class="building-item">
+                        <span class="building-info">
+                            <span class="building-icon">🔨</span>
+                            <span>Smithies: {{ state.smithy_quantity }}</span>
+                        </span>
+                        <button hx-post="/game/build-smithy" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_smithy() %}disabled{% endif %}>
+                            Build ({{ state.price_for_smithy }} 💰)
+                        </button>
+                    </div>
+                    <div class="building-item">
+                        <span class="building-info">
+                            <span class="building-icon">🏪</span>
+                            <span>Markets: {{ state.market_quantity }}</span>
+                        </span>
+                        <button hx-post="/game/build-market" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_market() %}disabled{% endif %}>
+                            Build ({{ state.price_for_market }} 💰)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Military Panel -->
+            <div class="panel">
+                <h3>⚔️ Military</h3>
+                <div class="military-info">
+                    <p>Soldiers: {{ state.soldier_quantity }}</p>
+                    <p>Weapons: {{ state.weapon_quantity }}</p>
+                    <p>Iron: {{ state.iron_quantity }}</p>
+                </div>
+            </div>
+
+            <!-- Trade Panel -->
+            <div class="panel">
+                <h3>💱 Trade</h3>
+                <p>Market Places: {{ state.market_quantity }}</p>
+                {% if state.market_quantity > 0 %}
+                <p class="hint">Trading coming soon!</p>
+                {% else %}
+                <p class="hint">Build a market to trade!</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Advancement Requirements -->
+        <div class="advancement-panel">
+            <h3>📊 Advancement to {{ state.get_next_grade_title() }}</h3>
+            {% if state.grade < 5 %}
+            <div class="requirements-list">
+                {% for req in state.get_grade_requirements() %}
+                <div class="requirement-item {% if req.1 >= req.2 %}met{% endif %}">
+                    <span class="req-name">{{ req.0 }}:</span>
+                    <span class="req-progress">{{ req.1 }} / {{ req.2 }}</span>
+                    <span class="req-status">{% if req.1 >= req.2 %}✅{% else %}❌{% endif %}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="max-rank">You have achieved the highest rank!</p>
+            {% endif %}
+        </div>
+
+        <!-- Finish Round Button -->
+        <div class="round-actions">
+            <button hx-post="/game/finish-round" hx-target="body" hx-swap="innerHTML" class="btn btn-large btn-finish-round">
+                ⏭️ Finish Round &amp; Continue
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}About - Dark Emperor{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>ℹ️ About Dark Emperor</h2>
+
+    <div class="about-content">
+        <div class="about-section">
+            <h3>🎮 Game Description</h3>
+            <p>
+                Dark Emperor is a medieval strategy and resource management game where you start as a Baron or Baroness
+                and work your way up to become Emperor or Empress.
+            </p>
+            <p>
+                Manage your resources wisely, build structures, maintain your army, keep your citizens happy,
+                and navigate through random events to achieve the ultimate rank!
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h3>🎯 How to Play</h3>
+            <ul class="gameplay-list">
+                <li><strong>Resources:</strong> Manage Gold, Food, Citizens, Soldiers, and more</li>
+                <li><strong>Buildings:</strong> Construct Farms, Mines, Smithies, Markets, and upgrade your Castle</li>
+                <li><strong>Settings:</strong> Adjust Taxes and Food Rations to balance income and popularity</li>
+                <li><strong>Advancement:</strong> Meet requirements to advance through 5 noble ranks</li>
+                <li><strong>Time Limit:</strong> Achieve Emperor/Empress status before the year 1500</li>
+            </ul>
+        </div>
+
+        <div class="about-section">
+            <h3>👑 Noble Ranks</h3>
+            <div class="ranks-grid">
+                <div class="rank-item">1. Baron/Baroness</div>
+                <div class="rank-item">2. Count/Countess</div>
+                <div class="rank-item">3. Duke/Duchess</div>
+                <div class="rank-item">4. Prince/Princess</div>
+                <div class="rank-item">5. King/Queen</div>
+                <div class="rank-item">6. Emperor/Empress</div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h3>📜 Credits</h3>
+            <p><strong>Original Game:</strong> DarkEmperorMD 1.0.2 by Steffen Bott</p>
+            <p><strong>English Translation:</strong> Oliver Schuster</p>
+            <p><strong>Rust Rewrite:</strong> Modern web version with htmx</p>
+            <p><strong>Original Platform:</strong> Java ME (Mobile)</p>
+            <p><strong>Technology:</strong> Rust, Axum, htmx, Askama</p>
+        </div>
+
+        <div class="about-section license">
+            <h3>⚖️ License</h3>
+            <p>
+                This is a fan remake of the original DarkEmperorMD game.
+                The original game is free for personal use.
+            </p>
+            <p>
+                For more information about the original game, visit: <strong>www.xboot.de</strong>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-buttons">
+        <button
+            hx-get="/"
+            hx-target="body"
+            hx-swap="innerHTML"
+            class="btn btn-primary">
+            ← Back to Menu
+        </button>
+    </div>
+</div>
+
+<style>
+    .about-content {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .about-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .about-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+
+    .about-section p {
+        margin-bottom: 10px;
+        line-height: 1.8;
+    }
+
+    .gameplay-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .gameplay-list li {
+        padding: 10px;
+        margin-bottom: 8px;
+        background: var(--bg-color);
+        border-radius: 6px;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .ranks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+    }
+
+    .rank-item {
+        padding: 12px;
+        background: var(--bg-color);
+        border-radius: 6px;
+        text-align: center;
+        font-weight: 600;
+        border: 2px solid var(--border-color);
+    }
+
+    .license {
+        background: #fffef0;
+        border-left: 4px solid var(--secondary-color);
+    }
+</style>
+{% endblock %}

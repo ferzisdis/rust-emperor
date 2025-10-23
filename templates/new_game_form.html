@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}New Game - Dark Emperor{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>🎮 Start New Game</h2>
+
+    <form
+        hx-post="/start-game"
+        hx-target="body"
+        hx-swap="innerHTML"
+        class="new-game-form">
+
+        <div class="form-group">
+            <label for="player_name">Your Name:</label>
+            <input
+                type="text"
+                id="player_name"
+                name="player_name"
+                required
+                maxlength="12"
+                placeholder="Enter your name"
+                class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="gender" value="Male" checked>
+                    <span>👨 Male (Baron → Emperor)</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="gender" value="Female">
+                    <span>👩 Female (Baroness → Empress)</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Difficulty:</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="difficulty" value="Easy" checked>
+                    <span>😊 Easy - Full resources, Year 1440</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="difficulty" value="Medium">
+                    <span>😐 Medium - Reduced resources, Year 1445</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="difficulty" value="Hard">
+                    <span>😰 Hard - Minimal resources, Year 1450</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">
+                ⚔️ Begin Your Reign
+            </button>
+            <button
+                type="button"
+                hx-get="/"
+                hx-target="body"
+                hx-swap="innerHTML"
+                class="btn btn-secondary">
+                ← Back to Menu
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

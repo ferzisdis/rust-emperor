@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dark Emperor - Rust Edition{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // htmx event handlers
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            // Smooth scroll to top on page changes
+            if (event.detail.target.id === 'main-content') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
