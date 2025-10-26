@@ -1,0 +1,147 @@
+{% extends "base.html" %} {% block title %}Round Report - Year {{ state.year - 1
+}}{% endblock %} {% block content %}
+<div class="container">
+    <div class="card">
+        <h2>📊 Round Report - Year {{ state.year - 1 }}</h2>
+
+        <div class="report-section">
+            <h3>💰 Income & Production</h3>
+
+            <div class="report-item">
+                <span class="report-label">Taxes Collected:</span>
+                <span class="report-value positive"
+                    >+{{ state.taxes_value }} 💰</span
+                >
+            </div>
+
+            <div class="report-item">
+                <span class="report-label">Market Income:</span>
+                <span class="report-value positive"
+                    >+{{ state.market_place_value }} 💰</span
+                >
+            </div>
+
+            <div class="report-item">
+                <span class="report-label">Harvest:</span>
+                <span
+                    class="report-value {% if state.harvest_value > 0 %}positive{% else %}negative{% endif %}"
+                >
+                    {{ state.harvest_value }} 🌾 ({{ state.harvest_percent }}%)
+                </span>
+            </div>
+        </div>
+
+        <div class="report-section">
+            <h3>📈 Popularity</h3>
+
+            <div class="report-item">
+                <span class="report-label">Current Popularity:</span>
+                <span class="report-value"
+                    >{{ state.popularity_percent }}%</span
+                >
+            </div>
+
+            <div class="report-item">
+                <span class="report-label">Change:</span>
+                {% set popularity_change = state.popularity_percent -
+                state.previous_popularity_percent %}
+                <span
+                    class="report-value {% if popularity_change > 0 %}positive{% else if popularity_change < 0 %}negative{% endif %}"
+                >
+                    {% if popularity_change > 0 %}+{% endif %}{{
+                    popularity_change }}%
+                </span>
+            </div>
+        </div>
+
+        {% match state.last_event_title %} {% when Some with (title) %}
+        <div class="report-section event-section">
+            <h3>⚡ Event: {{ title }}</h3>
+            {% match state.last_event_description %} {% when Some with (desc) %}
+            <p class="event-description">{{ desc }}</p>
+            {% when None %} {% endmatch %}
+        </div>
+        {% when None %} {% endmatch %}
+
+        <div class="button-group">
+            <form action="/game/continue-from-report" method="post">
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .report-section {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: rgba(139, 69, 19, 0.1);
+        border-radius: 8px;
+        border: 2px solid #8b4513;
+    }
+
+    .report-section h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #8b4513;
+        font-size: 1.3em;
+    }
+
+    .report-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+    }
+
+    .report-item:last-child {
+        border-bottom: none;
+    }
+
+    .report-label {
+        font-weight: bold;
+        color: #5d4e37;
+    }
+
+    .report-value {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .report-value.positive {
+        color: #2e7d32;
+    }
+
+    .report-value.negative {
+        color: #c62828;
+    }
+
+    .event-section {
+        background-color: rgba(255, 193, 7, 0.1);
+        border-color: #ffa000;
+    }
+
+    .event-section h3 {
+        color: #f57c00;
+    }
+
+    .event-description {
+        margin: 10px 0 0 0;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 5px;
+        line-height: 1.6;
+    }
+
+    .button-group {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn-primary {
+        padding: 15px 40px;
+        font-size: 1.2em;
+    }
+</style>
+{% endblock %}

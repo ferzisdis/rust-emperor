@@ -54,6 +54,10 @@ pub struct GameState {
     pub harvest_value: i32,
     pub harvest_percent: i32,
 
+    // Last event (for report display)
+    pub last_event_title: Option<String>,
+    pub last_event_description: Option<String>,
+
     // Game state
     pub is_game_ended: bool,
     pub is_won: bool,
@@ -111,7 +115,9 @@ impl GameState {
             taxes_value: 0,
             market_place_value: 0,
             harvest_value: 0,
-            harvest_percent: 0,
+            harvest_percent: 100,
+            last_event_title: None,
+            last_event_description: None,
             is_game_ended: false,
             is_won: false,
             trade_limit: 20000,
