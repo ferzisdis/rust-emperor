@@ -162,11 +162,28 @@
                 <h3>💱 Trade</h3>
                 <p>Market Places: {{ state.market_quantity }}</p>
                 {% if state.market_quantity > 0 %}
-                <p class="hint">Trading coming soon!</p>
+                <a href="/game/trade" class="btn btn-small" style="display: inline-block; margin: 10px 0;">🏪 Open Market</a>
+                <div class="trade-preview" style="margin-top: 10px;">
+                    <p class="hint">Available trades:</p>
+                    <ul style="margin: 5px 0; padding-left: 20px; font-size: 0.9em;">
+                        <li>🌾 Food (always available)</li>
+                        {% if state.market_quantity > 4 %}
+                        <li>⚙️ Iron (unlocked)</li>
+                        {% else %}
+                        <li style="opacity: 0.5;">🔒 Iron (need 5+ markets)</li>
+                        {% endif %}
+                        {% if state.market_quantity > 9 %}
+                        <li>⚔️ Weapons (unlocked)</li>
+                        {% else %}
+                        <li style="opacity: 0.5;">🔒 Weapons (need 10+ markets)</li>
+                        {% endif %}
+                    </ul>
+                </div>
                 {% else %}
                 <p class="hint">Build a market to trade!</p>
                 {% endif %}
             </div>
+
         </div>
 
         <!-- Advancement Requirements -->

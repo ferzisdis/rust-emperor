@@ -402,6 +402,119 @@ impl GameState {
 
         score
     }
+
+    // Trading methods
+    pub fn can_buy_food(&self, quantity: i32) -> bool {
+        let cost = (quantity / 100) * self.price_for_food as i32;
+        self.gold >= cost && self.market_quantity > 0
+    }
+
+    pub fn buy_food(&mut self, quantity: i32) -> Result<(), String> {
+        if self.market_quantity == 0 {
+            return Err("No markets available!".to_string());
+        }
+
+        let cost = (quantity / 100) * self.price_for_food as i32;
+        if self.gold < cost {
+            return Err("Not enough gold!".to_string());
+        }
+
+        self.gold -= cost;
+        self.food_quantity += quantity;
+        Ok(())
+    }
+
+    pub fn can_sell_food(&self, quantity: i32) -> bool {
+        self.food_quantity >= quantity && self.market_quantity > 0
+    }
+
+    pub fn sell_food(&mut self, quantity: i32) -> Result<(), String> {
+        if self.market_quantity == 0 {
+            return Err("No markets available!".to_string());
+        }
+
+        if self.food_quantity < quantity {
+            return Err("Not enough food!".to_string());
+        }
+
+        let price = (quantity / 100) * self.price_for_food as i32;
+        self.food_quantity -= quantity;
+        self.gold += price;
+        Ok(())
+    }
+
+    pub fn can_buy_iron(&self, quantity: i16) -> bool {
+        let cost = quantity as i32 * self.price_for_armor as i32;
+        self.gold >= cost && self.market_quantity > 4
+    }
+
+    pub fn buy_iron(&mut self, quantity: i16) -> Result<(), String> {
+        if self.market_quantity <= 4 {
+            return Err("Need more than 4 markets to trade iron!".to_string());
+        }
+
+        let cost = quantity as i32 * self.price_for_armor as i32;
+        if self.gold < cost {
+            return Err("Not enough gold!".to_string());
+        }
+
+        if (self.iron_quantity as i32 + quantity as i32) > self.trade_limit as i32 {
+            return Err("Trade limit reached!".to_string());
+        }
+
+        self.gold -= cost;
+        self.iron_quantity += quantity;
+        Ok(())
+    }
+
+    pub fn can_buy_weapons(&self, quantity: i16) -> bool {
+        let cost = quantity as i32 * self.price_for_weapon as i32;
+        self.gold >= cost && self.market_quantity > 9
+    }
+
+    pub fn buy_weapons(&mut self, quantity: i16) -> Result<(), String> {
+        if self.market_quantity <= 9 {
+            return Err("Need more than 9 markets to trade weapons!".to_string());
+        }
+
+        let cost = quantity as i32 * self.price_for_weapon as i32;
+        if self.gold < cost {
+            return Err("Not enough gold!".to_string());
+        }
+
+        if (self.weapon_quantity as i32 + quantity as i32) > self.trade_limit as i32 {
+            return Err("Trade limit reached!".to_string());
+        }
+
+        self.gold -= cost;
+        self.weapon_quantity += quantity;
+        Ok(())
+    }
+
+    pub fn get_available_trade_options(&self) -> Vec<TradeOption> {
+        let mut options = Vec::new();
+
+        if self.market_quantity > 0 {
+            options.push(TradeOption::Food);
+        }
+
+        if self.market_quantity > 4 {
+            options.push(TradeOption::Iron);
+        }
+
+        if self.market_quantity > 9 {
+            options.push(TradeOption::Weapons);
+        }
+
+        options
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum TradeOption {
+    Food,
+    Iron,
+    Weapons,
 }
 
 impl Default for GameState {

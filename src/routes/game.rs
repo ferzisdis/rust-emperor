@@ -8,7 +8,7 @@ use axum::{
 use serde::Deserialize;
 use std::sync::{Arc, RwLock};
 
-use crate::game::{EventGenerator, GameState};
+use crate::game::{EventGenerator, GameState, TradeOption};
 
 // Shared game state (in a real app, use proper session management)
 pub type SharedGameState = Arc<RwLock<Option<GameState>>>;
@@ -33,6 +33,17 @@ pub struct TaxesForm {
 #[derive(Deserialize)]
 pub struct FoodSupplyForm {
     food_supply: u8,
+}
+
+#[derive(Deserialize)]
+pub struct TradeForm {
+    quantity: i32,
+}
+
+#[derive(Template)]
+#[template(path = "trade.html")]
+struct TradeTemplate {
+    state: GameState,
 }
 
 async fn game_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
@@ -129,6 +140,75 @@ async fn upgrade_castle(State(game_state): State<SharedGameState>) -> impl IntoR
 
     drop(state);
     Redirect::to("/game")
+}
+
+async fn trade_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
+    let state = game_state.read().unwrap();
+
+    if let Some(ref game) = *state {
+        let template = TradeTemplate {
+            state: game.clone(),
+        };
+        Html(template.render().unwrap())
+    } else {
+        Html("<h1>No active game. Please start a new game.</h1>".to_string())
+    }
+}
+
+async fn buy_food(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.buy_food(form.quantity);
+    }
+
+    drop(state);
+    Redirect::to("/game/trade")
+}
+
+async fn sell_food(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.sell_food(form.quantity);
+    }
+
+    drop(state);
+    Redirect::to("/game/trade")
+}
+
+async fn buy_iron(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.buy_iron(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game/trade")
+}
+
+async fn buy_weapons(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.buy_weapons(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game/trade")
 }
 
 async fn finish_round(State(game_state): State<SharedGameState>) -> impl IntoResponse {
@@ -320,4 +400,9 @@ pub fn game_routes() -> Router<SharedGameState> {
         .route("/game/build-market", post(build_market))
         .route("/game/upgrade-castle", post(upgrade_castle))
         .route("/game/finish-round", post(finish_round))
+        .route("/game/trade", get(trade_view))
+        .route("/game/trade/buy-food", post(buy_food))
+        .route("/game/trade/sell-food", post(sell_food))
+        .route("/game/trade/buy-iron", post(buy_iron))
+        .route("/game/trade/buy-weapons", post(buy_weapons))
 }
