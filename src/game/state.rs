@@ -37,6 +37,11 @@ pub struct GameState {
     pub price_for_weapon: i16,
     pub soldier_price: i16,
 
+    // Price rate constants (for price fluctuation)
+    pub price_for_food_rate_constant: i16,
+    pub price_for_armor_rate_constant: i16,
+    pub price_for_weapon_rate_constant: i16,
+
     // Settings
     pub taxes_level: u8,
     pub food_supply: u8,
@@ -105,6 +110,9 @@ impl GameState {
             price_for_armor: 60,
             price_for_weapon: 150,
             soldier_price: 100,
+            price_for_food_rate_constant: 40,
+            price_for_armor_rate_constant: 60,
+            price_for_weapon_rate_constant: 150,
             taxes_level: 3,
             food_supply: 3,
             popularity_percent: 72,

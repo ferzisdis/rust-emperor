@@ -46,7 +46,7 @@
                 {% set popularity_change = state.popularity_percent -
                 state.previous_popularity_percent %}
                 <span
-                    class="report-value {% if popularity_change > 0 %}positive{% else if popularity_change < 0 %}negative{% endif %}"
+                    class="report-value {% if popularity_change > 0 %}positive{% else %}{% if popularity_change < 0 %}negative{% endif %}{% endif %}"
                 >
                     {% if popularity_change > 0 %}+{% endif %}{{
                     popularity_change }}%
