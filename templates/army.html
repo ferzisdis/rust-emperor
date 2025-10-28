@@ -1,0 +1,452 @@
+{% extends "base.html" %}
+
+{% block title %}Army - {{ state.user_name }}{% endblock %}
+
+{% block content %}
+<div class="trade-view">
+    <div class="trade-header">
+        <h1>⚔️ Army Recruitment</h1>
+        <a href="/game" class="btn btn-secondary">← Back to Game</a>
+    </div>
+
+    <!-- Resources Bar -->
+    <div class="resources-bar">
+        <div class="resource-item">
+            <span class="resource-icon">💰</span>
+            <span class="resource-label">Gold:</span>
+            <span class="resource-value">{{ state.gold }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">👥</span>
+            <span class="resource-label">Citizens:</span>
+            <span class="resource-value">{{ state.man_quantity }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">⚔️</span>
+            <span class="resource-label">Soldiers:</span>
+            <span class="resource-value">{{ state.soldier_quantity }}</span>
+        </div>
+        <div class="resource-item">
+            <span class="resource-icon">🗡️</span>
+            <span class="resource-label">Weapons:</span>
+            <span class="resource-value">{{ state.weapon_quantity }}</span>
+        </div>
+    </div>
+
+    <div class="trade-content">
+        <div class="trade-info-panel">
+            <h2>Soldier Recruitment</h2>
+            <p class="info-text">
+                Recruit citizens into your army to protect your realm and expand your influence.
+            </p>
+
+            <div class="trade-stats">
+                <div class="stat-item">
+                    <span class="stat-label">📊 Recruitment Cost:</span>
+                    <span class="stat-value">{{ state.soldier_price }} gold per soldier</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">🗡️ Weapons Required:</span>
+                    <span class="stat-value">1 weapon per soldier</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">👥 Citizens Required:</span>
+                    <span class="stat-value">1 citizen per soldier</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">⚠️ Minimum Citizens:</span>
+                    <span class="stat-value">Must keep at least 200 citizens</span>
+                </div>
+            </div>
+
+            <div class="available-notice">
+                <p><strong>Available to recruit:</strong></p>
+                <ul>
+                    <li>Maximum by gold: {{ state.max_recruitable_by_gold() }}</li>
+                    <li>Maximum by weapons: {{ state.weapon_quantity }}</li>
+                    <li>Maximum by citizens: {{ state.max_recruitable_by_citizens() }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="trade-actions-panel">
+            <!-- Recruit Soldiers -->
+            <div class="trade-item">
+                <h3>⚔️ Recruit Soldiers</h3>
+                <p class="trade-description">
+                    Convert citizens into soldiers. Each soldier requires 1 weapon and costs {{ state.soldier_price }} gold.
+                </p>
+
+                <form hx-post="/game/army/recruit" hx-target="body" hx-swap="innerHTML" class="trade-form">
+                    <div class="form-group">
+                        <label for="recruit_quantity">Quantity to recruit:</label>
+                        <input
+                            type="number"
+                            id="recruit_quantity"
+                            name="quantity"
+                            min="1"
+                            max="1000"
+                            value="1"
+                            class="trade-input"
+                            required
+                        />
+                    </div>
+
+                    <div class="quick-select">
+                        <span class="quick-label">Quick select:</span>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('recruit_quantity').value='1'">1</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('recruit_quantity').value='10'">10</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('recruit_quantity').value='50'">50</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('recruit_quantity').value='100'">100</button>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-large"
+                        {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
+                        🎖️ Recruit Soldiers
+                    </button>
+                </form>
+            </div>
+
+            <!-- Discharge Soldiers -->
+            <div class="trade-item">
+                <h3>🏠 Discharge Soldiers</h3>
+                <p class="trade-description">
+                    Return soldiers to civilian life. You'll receive a refund of {{ state.soldier_price }} gold per soldier and recover their weapons.
+                </p>
+
+                <form hx-post="/game/army/discharge" hx-target="body" hx-swap="innerHTML" class="trade-form">
+                    <div class="form-group">
+                        <label for="discharge_quantity">Quantity to discharge:</label>
+                        <input
+                            type="number"
+                            id="discharge_quantity"
+                            name="quantity"
+                            min="1"
+                            max="{{ state.soldier_quantity }}"
+                            value="1"
+                            class="trade-input"
+                            required
+                        />
+                    </div>
+
+                    <div class="quick-select">
+                        <span class="quick-label">Quick select:</span>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('discharge_quantity').value='1'">1</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('discharge_quantity').value='10'">10</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('discharge_quantity').value='50'">50</button>
+                        <button type="button" class="btn-quick" onclick="document.getElementById('discharge_quantity').value='{{ state.soldier_quantity }}'">All</button>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-large"
+                        {% if state.soldier_quantity == 0 %}disabled{% endif %}>
+                        🏠 Discharge Soldiers
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="help-section">
+        <h3>💡 Tips</h3>
+        <ul>
+            <li><strong>Soldiers are essential</strong> for advancing to higher ranks. Check your grade requirements!</li>
+            <li><strong>Weapons are produced</strong> by smithies from iron. Build more smithies to increase weapon production.</li>
+            <li><strong>Iron comes from mines</strong> or can be purchased at the market (requires 5+ markets).</li>
+            <li><strong>Keep enough citizens</strong> to maintain your economy. You must always have at least 200 citizens.</li>
+            <li><strong>Soldiers can be affected by events</strong> such as desertions, attacks, or celebrations.</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+.trade-view {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.trade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.trade-header h1 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.resources-bar {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.resource-icon {
+    font-size: 1.2em;
+}
+
+.resource-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.resource-value {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.trade-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.trade-info-panel, .trade-actions-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.trade-info-panel h2 {
+    margin-top: 0;
+    color: #34495e;
+}
+
+.info-text {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.trade-stats {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.stat-value {
+    color: #2c3e50;
+}
+
+.available-notice {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.available-notice ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.available-notice li {
+    color: #2e7d32;
+    margin: 5px 0;
+}
+
+.trade-actions-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.trade-item {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.trade-item h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.trade-description {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.trade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #555;
+}
+
+.trade-input {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.trade-input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.quick-select {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.quick-label {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.btn-quick {
+    padding: 5px 12px;
+    background: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-quick:hover {
+    background: #bdc3c7;
+}
+
+.help-section {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.help-section h3 {
+    margin-top: 0;
+    color: #856404;
+}
+
+.help-section ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.help-section li {
+    color: #856404;
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+.btn-large {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn:disabled:hover {
+    background-color: #bdc3c7;
+}
+
+@media (max-width: 768px) {
+    .trade-content {
+        grid-template-columns: 1fr;
+    }
+
+    .resources-bar {
+        flex-direction: column;
+    }
+}
+</style>
+{% endblock %}

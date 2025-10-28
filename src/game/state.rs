@@ -499,6 +499,83 @@ impl GameState {
         Ok(())
     }
 
+    pub fn can_recruit_soldiers(&self, quantity: i16) -> bool {
+        let cost = quantity as i32 * self.soldier_price as i32;
+        let has_enough_gold = self.gold >= cost;
+        let has_enough_weapons = self.weapon_quantity >= quantity;
+        let has_enough_citizens =
+            self.man_quantity - 200 >= self.soldier_quantity as i32 + quantity as i32;
+
+        has_enough_gold && has_enough_weapons && has_enough_citizens
+    }
+
+    pub fn recruit_soldiers(&mut self, quantity: i16) -> Result<(), String> {
+        if quantity <= 0 {
+            return Err("Quantity must be positive!".to_string());
+        }
+
+        let cost = quantity as i32 * self.soldier_price as i32;
+        if self.gold < cost {
+            return Err("Not enough gold!".to_string());
+        }
+
+        if self.weapon_quantity < quantity {
+            return Err("Not enough weapons!".to_string());
+        }
+
+        if self.man_quantity - 200 < self.soldier_quantity as i32 + quantity as i32 {
+            return Err("Not enough citizens! (Must keep at least 200 citizens)".to_string());
+        }
+
+        if (self.soldier_quantity as i32 + quantity as i32) > self.trade_limit as i32 {
+            return Err("Trade limit reached!".to_string());
+        }
+
+        self.gold -= cost;
+        self.weapon_quantity -= quantity;
+        self.man_quantity -= quantity as i32;
+        self.soldier_quantity += quantity;
+        Ok(())
+    }
+
+    pub fn can_discharge_soldiers(&self, quantity: i16) -> bool {
+        self.soldier_quantity >= quantity
+    }
+
+    pub fn discharge_soldiers(&mut self, quantity: i16) -> Result<(), String> {
+        if quantity <= 0 {
+            return Err("Quantity must be positive!".to_string());
+        }
+
+        if self.soldier_quantity < quantity {
+            return Err("Not enough soldiers!".to_string());
+        }
+
+        let refund = quantity as i32 * self.soldier_price as i32;
+
+        self.gold += refund;
+        self.weapon_quantity += quantity;
+        self.man_quantity += quantity as i32;
+        self.soldier_quantity -= quantity;
+        Ok(())
+    }
+
+    pub fn max_recruitable_by_gold(&self) -> i32 {
+        self.gold / self.soldier_price as i32
+    }
+
+    pub fn max_recruitable_by_citizens(&self) -> i32 {
+        if self.man_quantity > 200 {
+            self.man_quantity - 200
+        } else {
+            0
+        }
+    }
+
+    pub fn can_afford_soldier(&self) -> bool {
+        self.gold >= self.soldier_price as i32
+    }
+
     pub fn get_available_trade_options(&self) -> Vec<TradeOption> {
         let mut options = Vec::new();
 

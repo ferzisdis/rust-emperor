@@ -155,7 +155,15 @@
                     <p>Weapons: {{ state.weapon_quantity }}</p>
                     <p>Iron: {{ state.iron_quantity }}</p>
                 </div>
-            </div>
+                <a href="/game/army" class="btn btn-small" style="display: inline-block; margin: 10px 0;">🎖️ Manage Army</a>
+                <div class="army-preview" style="margin-top: 10px;">
+                    <p class="hint">Recruit citizens into soldiers to protect your realm.</p>
+                    {% if state.weapon_quantity > 0 && state.man_quantity > 200 %}
+                    <p style="color: #27ae60; font-size: 0.9em;">✅ Ready to recruit!</p>
+                    {% else %}
+                    <p style="color: #e74c3c; font-size: 0.9em;">⚠️ Need weapons and citizens</p>
+                    {% endif %}
+                </div>            </div>
 
             <!-- Trade Panel -->
             <div class="panel">

@@ -46,6 +46,12 @@ struct TradeTemplate {
     state: GameState,
 }
 
+#[derive(Template)]
+#[template(path = "army.html")]
+struct ArmyTemplate {
+    state: GameState,
+}
+
 async fn game_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
     let state = game_state.read().unwrap();
 
@@ -209,6 +215,47 @@ async fn buy_weapons(
 
     drop(state);
     Redirect::to("/game/trade")
+}
+
+async fn army_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
+    let state = game_state.read().unwrap();
+
+    if let Some(ref game) = *state {
+        let template = ArmyTemplate {
+            state: game.clone(),
+        };
+        Html(template.render().unwrap())
+    } else {
+        Html("<h1>No active game. Please start a new game.</h1>".to_string())
+    }
+}
+
+async fn recruit_soldiers(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.recruit_soldiers(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game/army")
+}
+
+async fn discharge_soldiers(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.discharge_soldiers(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game/army")
 }
 
 async fn finish_round(State(game_state): State<SharedGameState>) -> impl IntoResponse {
@@ -441,4 +488,7 @@ pub fn game_routes() -> Router<SharedGameState> {
         .route("/game/trade/sell-food", post(sell_food))
         .route("/game/trade/buy-iron", post(buy_iron))
         .route("/game/trade/buy-weapons", post(buy_weapons))
+        .route("/game/army", get(army_view))
+        .route("/game/army/recruit", post(recruit_soldiers))
+        .route("/game/army/discharge", post(discharge_soldiers))
 }
