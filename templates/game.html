@@ -200,11 +200,11 @@
             {% if state.grade < 5 %}
             <div class="requirements-list">
                 {% for req in state.get_grade_requirements() %}
-                <div class="requirement-item {% if req.1 >= req.2 %}met{% endif %}">
-                    <span class="req-name">{{ req.0 }}:</span>
-                    <span class="req-progress">{{ req.1 }} / {{ req.2 }}</span>
-                    <span class="req-status">{% if req.1 >= req.2 %}✅{% else %}❌{% endif %}</span>
+                {% if req.2 > req.1 %}
+                <div class="requirement-item">
+                    <span class="req-name">{{ req.0 }}</span>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
             {% else %}

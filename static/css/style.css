@@ -754,3 +754,20 @@ body {
         display: none;
     }
 }
+
+/* Pixel Art Image Rendering - Keep Sharp Edges */
+img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* For game artwork specifically */
+.game-artwork,
+.pixel-art {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
