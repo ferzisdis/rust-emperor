@@ -43,23 +43,110 @@
 
     <!-- Main Game Area -->
     <div class="game-content">
-        <!-- Castle Display -->
-        <div class="castle-section">
-            <div class="castle-display">
+        <!-- Kingdom Visual Representation -->
+        <div class="kingdom-section">
+            <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 10px;">🏰 Your Kingdom</h3>
+            <div class="kingdom-canvas">
+                <!-- Background Land -->
+                <img src="/static/images/deg_land.png" alt="Land" class="kingdom-land pixel-art" />
+
+                <!-- Castle Structures - positioned based on level -->
+                {% if state.castle_level == 0 %}
+                <img src="/static/images/deg_castle0.png" alt="Castle Level 0" class="kingdom-castle castle-main pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 0 %}
+                {% if state.castle_level < 5 %}
+                <img src="/static/images/deg_castle1.png" alt="Castle Level 1-4" class="kingdom-castle castle-main pixel-art" />
+                {% endif %}
+                {% endif %}
+                {% if state.castle_level > 1 %}
+                <img src="/static/images/deg_castle2.png" alt="Castle Tower 1" class="kingdom-castle castle-left-tower pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 2 %}
+                <img src="/static/images/deg_castle3.png" alt="Castle Wing" class="kingdom-castle castle-left-wing pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 3 %}
+                <img src="/static/images/deg_castle4.png" alt="Castle Level 4+" class="kingdom-castle castle-main-upgrade pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 4 %}
+                <img src="/static/images/deg_castle3.png" alt="Castle Right Wing" class="kingdom-castle castle-right-wing pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 5 %}
+                <img src="/static/images/deg_castle2.png" alt="Castle Right Tower" class="kingdom-castle castle-right-tower pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 6 %}
+                <img src="/static/images/deg_castle5.png" alt="Castle Spire Left" class="kingdom-castle castle-spire-left pixel-art" />
+                {% endif %}
+                {% if state.castle_level > 7 %}
+                <img src="/static/images/deg_castle5.png" alt="Castle Spire Right" class="kingdom-castle castle-spire-right pixel-art" />
+                {% endif %}
+
+                <!-- Farms - positioned based on quantity -->
+                {% if state.farm_quantity > 0 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-1 pixel-art" />
+                {% endif %}
+                {% if state.farm_quantity > 19 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-2 pixel-art" />
+                {% endif %}
+                {% if state.farm_quantity > 29 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-3 pixel-art" />
+                {% endif %}
+                {% if state.farm_quantity > 39 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-4 pixel-art" />
+                {% endif %}
+                {% if state.farm_quantity > 49 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-5 pixel-art" />
+                {% endif %}
+                {% if state.farm_quantity > 99 %}
+                <img src="/static/images/deg_farm.png" alt="Farm" class="kingdom-building farm-6 pixel-art" />
+                {% endif %}
+
+                <!-- Markets - positioned based on quantity -->
+                {% if state.market_quantity > 0 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-1 pixel-art" />
+                {% endif %}
+                {% if state.market_quantity > 4 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-2 pixel-art" />
+                {% endif %}
+                {% if state.market_quantity > 9 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-3 pixel-art" />
+                {% endif %}
+                {% if state.market_quantity > 39 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-4 pixel-art" />
+                {% endif %}
+                {% if state.market_quantity > 49 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-5 pixel-art" />
+                {% endif %}
+                {% if state.market_quantity > 99 %}
+                <img src="/static/images/deg_market.png" alt="Market" class="kingdom-building market-6 pixel-art" />
+                {% endif %}
+
+                <!-- Mines - positioned based on quantity -->
+                {% if state.mine_quantity > 0 %}
+                <img src="/static/images/deg_mine.png" alt="Mine" class="kingdom-building mine-1 pixel-art" />
+                {% endif %}
+                {% if state.mine_quantity > 19 %}
+                <img src="/static/images/deg_mine.png" alt="Mine" class="kingdom-building mine-2 pixel-art" />
+                {% endif %}
+                {% if state.mine_quantity > 29 %}
+                <img src="/static/images/deg_mine.png" alt="Mine" class="kingdom-building mine-3 pixel-art" />
+                {% endif %}
+
+                <!-- Smithies - positioned based on quantity -->
+                {% if state.smithy_quantity > 0 %}
+                <img src="/static/images/deg_smithy.png" alt="Smithy" class="kingdom-building smithy-1 pixel-art" />
+                {% endif %}
+                {% if state.smithy_quantity > 19 %}
+                <img src="/static/images/deg_smithy.png" alt="Smithy" class="kingdom-building smithy-2 pixel-art" />
+                {% endif %}
+                {% if state.smithy_quantity > 29 %}
+                <img src="/static/images/deg_smithy.png" alt="Smithy" class="kingdom-building smithy-3 pixel-art" />
+                {% endif %}
+            </div>
+
+            <!-- Castle Info and Upgrade -->
+            <div class="castle-info">
                 <h3>🏰 Castle Level {{ state.castle_level }}</h3>
-                <div class="castle-visual">
-                    {% if state.castle_level == 0 %}
-                    <div class="castle-image">🏚️</div>
-                    {% else if state.castle_level == 1 %}
-                    <div class="castle-image">🏘️</div>
-                    {% else if state.castle_level == 2 %}
-                    <div class="castle-image">🏰</div>
-                    {% else if state.castle_level < 6 %}
-                    <div class="castle-image">🏯</div>
-                    {% else %}
-                    <div class="castle-image">🏛️</div>
-                    {% endif %}
-                </div>
                 {% if state.castle_level < 8 %}
                 <button
                     hx-post="/game/upgrade-castle"
