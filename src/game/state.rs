@@ -27,15 +27,15 @@ pub struct GameState {
     pub market_quantity: i16,
 
     // Prices
-    pub price_for_castle: i16,
-    pub price_for_farm: i16,
-    pub price_for_mine: i16,
-    pub price_for_smithy: i16,
-    pub price_for_market: i16,
-    pub price_for_food: i16,
-    pub price_for_armor: i16,
-    pub price_for_weapon: i16,
-    pub soldier_price: i16,
+    pub price_for_castle: i32,
+    pub price_for_farm: i32,
+    pub price_for_mine: i32,
+    pub price_for_smithy: i32,
+    pub price_for_market: i32,
+    pub price_for_food: i32,
+    pub price_for_armor: i32,
+    pub price_for_weapon: i32,
+    pub soldier_price: i32,
 
     // Price rate constants (for price fluctuation)
     pub price_for_food_rate_constant: i16,
@@ -261,7 +261,7 @@ impl GameState {
         }
         self.gold -= self.price_for_farm as i32;
         self.farm_quantity += 1;
-        self.price_for_farm = (self.price_for_farm as f32 * 1.5) as i16;
+        self.price_for_farm = (self.price_for_farm as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -271,7 +271,7 @@ impl GameState {
         }
         self.gold -= self.price_for_mine as i32;
         self.mine_quantity += 1;
-        self.price_for_mine = (self.price_for_mine as f32 * 1.5) as i16;
+        self.price_for_mine = (self.price_for_mine as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -281,7 +281,7 @@ impl GameState {
         }
         self.gold -= self.price_for_smithy as i32;
         self.smithy_quantity += 1;
-        self.price_for_smithy = (self.price_for_smithy as f32 * 1.5) as i16;
+        self.price_for_smithy = (self.price_for_smithy as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -291,7 +291,7 @@ impl GameState {
         }
         self.gold -= self.price_for_market as i32;
         self.market_quantity += 1;
-        self.price_for_market = (self.price_for_market as f32 * 1.5) as i16;
+        self.price_for_market = (self.price_for_market as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -302,7 +302,7 @@ impl GameState {
         self.gold -= self.price_for_castle as i32;
         self.castle_level += 1;
         self.is_castle_upgrade_in_this_round = true;
-        self.price_for_castle = (self.price_for_castle as f32 * 2.0) as i16;
+        self.price_for_castle = (self.price_for_castle as f32 * 2.0) as i32;
         Ok(())
     }
 

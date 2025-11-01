@@ -439,35 +439,36 @@ fn apply_round_effects(game: &mut GameState) {
 
     // 12. Adjust food prices based on harvest
     if game.farm_quantity > 0 {
-        let mut var1 = game.price_for_food_rate_constant as i32 * 100 / game.harvest_percent;
-        let random_value = rng.gen_range(0..(var1 / 5));
+        let mut price_for_food =
+            game.price_for_food_rate_constant as i32 * 100 / game.harvest_percent;
+        let random_value = rng.gen_range(0..(price_for_food / 5));
 
-        if var1 < 25 {
-            var1 = 25;
+        if price_for_food < 25 {
+            price_for_food = 25;
         }
-        if var1 > 100 {
-            var1 = 100;
+        if price_for_food > 100 {
+            price_for_food = 100;
         }
 
-        var1 -= random_value;
-        game.price_for_food = var1 as i16;
+        price_for_food -= random_value;
+        game.price_for_food = price_for_food;
     } else {
         let random_value = rng.gen_range(
             -(game.price_for_food_rate_constant as i32 * 50 / 100)
                 ..=(game.price_for_food_rate_constant as i32 * 50 / 100),
         );
-        game.price_for_food = (random_value + game.price_for_food_rate_constant as i32) as i16;
+        game.price_for_food = random_value + game.price_for_food_rate_constant as i32;
     }
 
     // 13. Adjust armor prices (with randomness)
     let var6 = game.price_for_armor_rate_constant as i32 * 20 / 100;
     let random_value = rng.gen_range(-var6..=var6);
-    game.price_for_armor = (game.price_for_armor_rate_constant as i32 + random_value) as i16;
+    game.price_for_armor = game.price_for_armor_rate_constant as i32 + random_value;
 
     // 14. Adjust weapon prices (with randomness)
     let var6 = game.price_for_weapon_rate_constant as i32 * 20 / 100;
     let random_value = rng.gen_range(-var6..=var6);
-    game.price_for_weapon = (game.price_for_weapon_rate_constant as i32 + random_value) as i16;
+    game.price_for_weapon = game.price_for_weapon_rate_constant as i32 + random_value;
 }
 
 pub fn game_routes() -> Router<SharedGameState> {
