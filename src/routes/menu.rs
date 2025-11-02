@@ -50,6 +50,27 @@ async fn index() -> impl IntoResponse {
     Html(template.render().unwrap())
 }
 
+async fn game_over(State(game_state): State<SharedGameState>) -> impl IntoResponse {
+    let state = game_state.read().unwrap();
+
+    let (won, score, player_name) = if let Some(ref game) = *state {
+        let score = game.calculate_score();
+        (game.is_won, score, game.user_name.clone())
+    } else {
+        (false, 0, String::new())
+    };
+
+    drop(state);
+
+    let template = MenuTemplate {
+        show_game_over: true,
+        won,
+        score,
+        player_name,
+    };
+    Html(template.render().unwrap())
+}
+
 async fn new_game_form() -> impl IntoResponse {
     let template = NewGameFormTemplate;
     Html(template.render().unwrap())
@@ -108,4 +129,5 @@ pub fn menu_routes() -> Router<SharedGameState> {
         .route("/start-game", post(start_game))
         .route("/about", get(about))
         .route("/highscores", get(highscores))
+        .route("/game-over", get(game_over))
 }
