@@ -3,35 +3,39 @@
 {% block title %}Highscores - Dark Emperor{% endblock %}
 
 {% block content %}
-<div class="form-container">
+<div class="form-container highscores-container">
     <h2>🏆 Highscores</h2>
 
     <div class="highscores-content">
         {% if scores.len() > 0 %}
-        <table class="highscores-table">
-            <thead>
-                <tr>
-                    <th class="rank-col">Rank</th>
-                    <th class="name-col">Player</th>
-                    <th class="score-col">Score</th>
-                    <th class="difficulty-col">Difficulty</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for score in scores %}
-                <tr class="score-row">
-                    <td class="rank-col">{{ loop.index }}</td>
-                    <td class="name-col">{{ score.0 }}</td>
-                    <td class="score-col">{{ score.1 }}</td>
-                    <td class="difficulty-col">
-                        <span class="difficulty-badge {{ score.2|lower }}">
-                            {{ score.2 }}
-                        </span>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="highscores-table">
+            <table></table>
+                <thead>
+                    <tr>
+                        <th class="rank-col">Rank</th>
+                        <th class="name-col">Player</th>
+                        <th class="score-col">Score</th>
+                        <th class="difficulty-col">Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in scores %}
+                    <tr class="score-row">
+                        <td class="rank-col">
+                            <span class="rank-badge">{{ loop.index }}</span>
+                        </td>
+                        <td class="name-col">{{ score.0 }}</td>
+                        <td class="score-col">{{ score.1 }}</td>
+                        <td class="difficulty-col">
+                            <span class="difficulty-badge {{ score.2|lower }}">
+                                {{ score.2 }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
         <div class="no-scores">
             <p>No highscores yet!</p>
@@ -50,131 +54,4 @@
         </button>
     </div>
 </div>
-
-<style>
-    .highscores-content {
-        margin: 30px 0;
-    }
-
-    .highscores-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-    }
-
-    .highscores-table thead {
-        background: var(--primary-color);
-        color: white;
-    }
-
-    .highscores-table th {
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-        font-size: 1.1rem;
-    }
-
-    .highscores-table td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .score-row:hover {
-        background: var(--bg-color);
-    }
-
-    .score-row:last-child td {
-        border-bottom: none;
-    }
-
-    .rank-col {
-        width: 80px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: var(--primary-color);
-    }
-
-    .name-col {
-        font-weight: 600;
-        color: var(--text-color);
-    }
-
-    .score-col {
-        text-align: right;
-        font-weight: bold;
-        font-size: 1.1rem;
-        color: var(--secondary-color);
-    }
-
-    .difficulty-col {
-        text-align: center;
-        width: 120px;
-    }
-
-    .difficulty-badge {
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    .difficulty-badge.easy {
-        background: #c8e6c9;
-        color: #2e7d32;
-    }
-
-    .difficulty-badge.medium {
-        background: #fff9c4;
-        color: #f57f17;
-    }
-
-    .difficulty-badge.hard {
-        background: #ffcdd2;
-        color: #c62828;
-    }
-
-    .no-scores {
-        text-align: center;
-        padding: 60px 20px;
-        background: white;
-        border-radius: 8px;
-        border: 2px dashed var(--border-color);
-    }
-
-    .no-scores p {
-        font-size: 1.2rem;
-        margin: 10px 0;
-    }
-
-    .no-scores .hint {
-        color: #666;
-        font-size: 1rem;
-        font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-        .highscores-table {
-            font-size: 0.9rem;
-        }
-
-        .highscores-table th,
-        .highscores-table td {
-            padding: 10px 8px;
-        }
-
-        .rank-col,
-        .difficulty-col {
-            width: 60px;
-        }
-
-        .score-col {
-            font-size: 1rem;
-        }
-    }
-</style>
 {% endblock %}

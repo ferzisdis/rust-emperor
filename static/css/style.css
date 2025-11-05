@@ -1,19 +1,54 @@
-/* Root Variables */
+/* ===================================================================
+   Fantasy Manuscript (Light Parchment) Theme
+   A warm, medieval-inspired UI with modern readability
+   =================================================================== */
+
+/* Root Variables - Parchment Color Palette */
 :root {
-    --primary-color: #8b4513;
-    --secondary-color: #daa520;
-    --accent-color: #cd853f;
-    --success-color: #2e7d32;
-    --danger-color: #c62828;
-    --bg-color: #f5e6d3;
-    --panel-bg: #fff8e7;
-    --border-color: #8b7355;
-    --text-color: #3e2723;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.15);
+    /* Parchment Colors */
+    --parchment-main: #f4ecd5;
+    --parchment-light: #f9f5ea;
+    --parchment-border: #cbbca4;
+    --parchment-shadow: #a48b67;
+
+    /* Text Colors */
+    --text-main: #3f3426;
+    --text-secondary: #6b5d4f;
+    --text-muted: #8a7b6d;
+
+    /* Accent Gold */
+    --gold-accent: #c59a37;
+    --gold-dark: #a67c28;
+    --gold-light: #d4ab52;
+
+    /* Status Colors (muted, warm) */
+    --success-color: #7a9b6d;
+    --warning-color: #c89860;
+    --danger-color: #b8685f;
+
+    /* Shadows */
+    --shadow-soft: 0 2px 8px rgba(164, 139, 103, 0.12);
+    --shadow-medium: 0 4px 12px rgba(164, 139, 103, 0.18);
+    --shadow-hover: 0 6px 16px rgba(164, 139, 103, 0.22);
+    --inner-shadow: inset 0 1px 3px rgba(164, 139, 103, 0.08);
+
+    /* Border Radius */
+    --radius-small: 6px;
+    --radius-medium: 8px;
+    --radius-large: 12px;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
 }
 
-/* Global Styles */
+/* ===================================================================
+   Global Reset & Base Styles
+   =================================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -21,636 +56,879 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5e6d3 0%, #e8d5bf 100%);
-    color: var(--text-color);
+    font-family:
+        "Inter",
+        "Noto Sans",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    background: var(--parchment-main);
+    color: var(--text-main);
     min-height: 100vh;
-    line-height: 1.3;
-    font-size: clamp(13px, 1.4vw, 15px);
+    line-height: 1.5;
+    font-size: clamp(14px, 1.5vw, 16px);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+/* Typography - Medieval Elegance */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "EB Garamond", Georgia, serif;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-main);
+}
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+h2 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+h3 {
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+}
+
+/* Special decorative title class */
+.title-decorative {
+    font-family: "Uncial Antiqua", "EB Garamond", serif;
+    letter-spacing: 0.02em;
+}
+
+/* ===================================================================
+   Container & Layout
+   =================================================================== */
 
 .container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 8px;
+    padding: var(--spacing-md);
 }
 
-/* Main Menu Styles */
+/* ===================================================================
+   Main Menu Styles
+   =================================================================== */
+
 .main-menu {
-    max-width: 450px;
-    margin: 15px auto;
+    max-width: 500px;
+    margin: var(--spacing-xl) auto;
     text-align: center;
 }
 
 .game-header {
-    margin-bottom: 15px;
+    margin-bottom: var(--spacing-lg);
 }
 
 .game-header h1 {
-    font-size: clamp(1.8rem, 4.5vw, 2.2rem);
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    margin-bottom: 3px;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    color: var(--text-main);
+    text-shadow: 1px 1px 2px rgba(164, 139, 103, 0.3);
+    margin-bottom: var(--spacing-xs);
 }
 
 .subtitle {
-    font-size: clamp(0.9rem, 1.8vw, 1rem);
-    color: var(--accent-color);
+    font-family: "EB Garamond", serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-secondary);
     font-style: italic;
 }
 
+/* Game Over Panel */
 .game-over-panel {
-    background: var(--panel-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: var(--shadow);
+    background: var(--parchment-light);
+    border: 2px solid var(--parchment-border);
+    border-radius: var(--radius-medium);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
 }
 
 .game-over-panel.won {
     border-color: var(--success-color);
-    background: #e8f5e9;
+    background: #f5f9f3;
 }
 
 .game-over-panel.lost {
     border-color: var(--danger-color);
-    background: #ffebee;
+    background: #f9f3f2;
 }
 
 .game-over-panel h2 {
-    font-size: clamp(1.3rem, 3.5vw, 1.7rem);
-    margin-bottom: 8px;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    margin-bottom: var(--spacing-sm);
 }
 
 .result-message {
-    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
-    margin-bottom: 12px;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
 }
 
 .score-display {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 10px;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-small);
+    border: 1px solid var(--parchment-border);
 }
 
 .score-display p {
-    margin: 3px 0;
-    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+    margin: var(--spacing-xs) 0;
+    font-size: clamp(0.9rem, 1.9vw, 1rem);
 }
 
+/* Menu Buttons */
 .menu-buttons {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
 }
 
 .menu-button {
-    padding: 12px 18px;
-    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
-    background: var(--panel-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 6px;
+    padding: 14px 20px;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    font-weight: 500;
+    background: var(--parchment-light);
+    border: 2px solid var(--parchment-border);
+    border-radius: var(--radius-small);
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow);
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-soft);
+    color: var(--text-main);
 }
 
 .menu-button:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-hover);
-    background: #fff;
+    background: #fffef8;
+    border-color: var(--gold-accent);
 }
 
 .menu-button.primary {
-    background: var(--primary-color);
-    color: white;
-    font-weight: bold;
+    background: var(--gold-accent);
+    color: var(--text-main);
+    border-color: var(--gold-dark);
+    font-weight: 600;
 }
 
 .menu-button.primary:hover {
-    background: var(--accent-color);
+    background: var(--gold-light);
+    box-shadow: var(--shadow-hover);
 }
 
 .credits {
-    margin-top: 15px;
-    font-size: 0.8rem;
-    color: #666;
+    margin-top: var(--spacing-lg);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 .credits p {
-    margin: 2px 0;
+    margin: var(--spacing-xs) 0;
 }
 
-/* Form Styles */
+/* ===================================================================
+   Form Styles - Medieval Manuscript Forms
+   =================================================================== */
+
 .form-container {
-    max-width: 450px;
-    margin: 15px auto;
-    background: var(--panel-bg);
-    padding: 15px;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow);
+    max-width: 500px;
+    margin: var(--spacing-xl) auto;
+    background: var(--parchment-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-medium), var(--inner-shadow);
 }
 
 .form-container h2 {
-    font-size: clamp(1.3rem, 2.8vw, 1.6rem);
-    color: var(--primary-color);
-    margin-bottom: 15px;
+    font-size: clamp(1.4rem, 3vw, 1.7rem);
+    color: var(--text-main);
+    margin-bottom: var(--spacing-lg);
     text-align: center;
+    border-bottom: 2px solid var(--parchment-border);
+    padding-bottom: var(--spacing-sm);
 }
 
 .new-game-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--spacing-md);
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: var(--spacing-sm);
 }
 
 .form-group label {
-    font-weight: bold;
-    color: var(--primary-color);
-    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
 }
 
 .form-input {
-    padding: 8px 10px;
-    font-size: clamp(0.85rem, 1.7vw, 0.95rem);
-    border: 2px solid var(--border-color);
-    border-radius: 6px;
-    background: white;
-    transition: border-color 0.3s;
+    padding: 10px 12px;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    font-family: "Inter", sans-serif;
+    border: 2px solid var(--parchment-border);
+    border-radius: var(--radius-small);
+    background: #fffef8;
+    color: var(--text-main);
+    transition: all 0.25s ease;
+    box-shadow: var(--inner-shadow);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: var(--secondary-color);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 3px rgba(197, 154, 55, 0.1);
 }
 
 .radio-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-left: 3px;
+    gap: var(--spacing-sm);
 }
 
 .radio-label {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px;
-    background: white;
-    border: 2px solid var(--border-color);
-    border-radius: 6px;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: #fffef8;
+    border: 2px solid var(--parchment-border);
+    border-radius: var(--radius-small);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
 }
 
 .radio-label:hover {
-    background: #fffef5;
-    border-color: var(--secondary-color);
+    background: var(--parchment-light);
+    border-color: var(--gold-accent);
+    box-shadow: var(--shadow-soft);
 }
 
 .radio-label input[type="radio"] {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
+    accent-color: var(--gold-accent);
 }
 
 .radio-label span {
-    font-size: clamp(0.85rem, 1.7vw, 0.95rem);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
 }
 
 .form-buttons {
     display: flex;
-    gap: 8px;
-    margin-top: 12px;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
 }
 
-/* Button Styles */
+/* ===================================================================
+   Button Styles - Polished Bronze/Wax Seal Style
+   =================================================================== */
+
 .btn {
-    padding: 8px 14px;
-    font-size: clamp(0.8rem, 1.7vw, 0.9rem);
+    padding: 9px 16px;
+    font-size: clamp(0.85rem, 1.7vw, 0.95rem);
     font-weight: 600;
+    font-family: "Inter", sans-serif;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--radius-small);
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow);
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-soft);
+    color: var(--text-main);
 }
 
-.btn:hover:not(.disabled) {
+.btn:hover:not(.disabled):not(:disabled) {
     transform: translateY(-1px);
     box-shadow: var(--shadow-hover);
 }
 
+.btn:active:not(.disabled):not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-soft);
+}
+
 .btn-primary {
-    background: var(--primary-color);
-    color: white;
+    background: var(--gold-accent);
+    border: 1px solid var(--gold-dark);
     flex: 1;
 }
 
-.btn-primary:hover {
-    background: var(--accent-color);
+.btn-primary:hover:not(.disabled):not(:disabled) {
+    background: var(--gold-light);
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: var(--parchment-border);
+    border: 1px solid var(--parchment-shadow);
+    color: var(--text-main);
     flex: 1;
 }
 
-.btn-secondary:hover {
-    background: #5a6268;
+.btn-secondary:hover:not(.disabled):not(:disabled) {
+    background: #d5c8b0;
 }
 
 .btn-small {
-    padding: 5px 10px;
-    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
+    padding: 6px 12px;
+    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
 }
 
 .btn-large {
-    padding: 10px 20px;
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    padding: 12px 24px;
+    font-size: clamp(1rem, 2.1vw, 1.15rem);
 }
 
 .btn.disabled,
 .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: #ccc;
+    background: var(--parchment-border);
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-/* Game View Styles */
+/* ===================================================================
+   Game View Styles
+   =================================================================== */
+
 .game-view {
-    padding: 5px;
+    padding: var(--spacing-sm);
     max-width: 100%;
 }
 
+/* Game Header - Player Info */
 .game-view .game-header {
-    background: var(--panel-bg);
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 2px solid var(--border-color);
-    margin-bottom: 10px;
+    background: var(--parchment-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    margin-bottom: var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
 }
 
 .player-info h1 {
-    font-size: clamp(1.1rem, 2.6vw, 1.4rem);
-    color: var(--primary-color);
-    margin-bottom: 2px;
+    font-size: clamp(1.2rem, 2.8vw, 1.5rem);
+    color: var(--text-main);
+    margin-bottom: var(--spacing-xs);
 }
 
 .year {
-    color: #666;
-    font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+    color: var(--text-secondary);
+    font-size: clamp(0.8rem, 1.7vw, 0.9rem);
+    font-family: "EB Garamond", serif;
+    font-style: italic;
 }
 
-/* Resources Bar */
+/* ===================================================================
+   Resources Bar - Engraved Icon Style
+   =================================================================== */
+
 .resources-bar {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 6px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
 .resource-item {
-    background: var(--panel-bg);
-    padding: 6px 8px;
-    border-radius: 5px;
-    border: 2px solid var(--border-color);
+    background: var(--parchment-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-small);
+    border: 2px solid var(--parchment-border);
     display: flex;
     align-items: center;
-    gap: 4px;
-    box-shadow: var(--shadow);
+    gap: var(--spacing-sm);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
+    transition: all 0.25s ease;
+}
+
+.resource-item:hover {
+    box-shadow: var(--shadow-medium);
 }
 
 .resource-icon {
-    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-size: clamp(1.1rem, 2.3vw, 1.25rem);
+    filter: grayscale(0.2) contrast(0.9);
 }
 
 .resource-label {
     font-weight: 600;
-    color: var(--primary-color);
-    font-size: clamp(0.75rem, 1.5vw, 0.82rem);
+    color: var(--text-secondary);
+    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
 }
 
 .resource-value {
-    font-weight: bold;
-    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
     margin-left: auto;
-    color: var(--secondary-color);
+    color: var(--text-main);
 }
 
-/* Game Content */
+/* ===================================================================
+   Game Content & Layout
+   =================================================================== */
+
 .game-content {
     display: grid;
-    gap: 10px;
+    gap: var(--spacing-md);
 }
 
-.castle-section {
-    background: var(--panel-bg);
-    padding: 10px;
-    border-radius: 6px;
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow);
+/* Kingdom Section - Framed Pixel Art Display */
+.kingdom-section {
+    background: var(--parchment-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-large);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-medium), var(--inner-shadow);
+    margin-bottom: var(--spacing-md);
 }
 
-.castle-display {
+.kingdom-section > h3 {
     text-align: center;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+    font-family: "EB Garamond", serif;
 }
 
-.castle-display h3 {
-    color: var(--primary-color);
+/* Castle Info Section */
+.castle-info {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    border-top: 2px solid var(--parchment-border);
+    margin-top: var(--spacing-md);
+}
+
+.castle-info h3 {
+    color: var(--text-main);
     font-size: clamp(1rem, 2.2vw, 1.15rem);
-    margin-bottom: 6px;
-}
-
-.castle-visual {
-    margin: 8px 0;
-}
-
-.castle-image {
-    font-size: clamp(2.5rem, 6vw, 3.2rem);
-    line-height: 1;
+    margin-bottom: var(--spacing-sm);
 }
 
 .btn-upgrade {
-    background: var(--success-color);
-    color: white;
-    padding: 8px 14px;
-    font-size: clamp(0.8rem, 1.7vw, 0.9rem);
-    border: none;
-    border-radius: 5px;
+    background: var(--gold-accent);
+    color: var(--text-main);
+    border: 1px solid var(--gold-dark);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+    font-weight: 600;
+    border-radius: var(--radius-small);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-soft);
 }
 
 .btn-upgrade:hover:not(.disabled):not(:disabled) {
-    background: #1b5e20;
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
 }
 
 .max-level {
     color: var(--success-color);
-    font-weight: bold;
-    margin-top: 6px;
-    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
+    font-weight: 600;
+    margin-top: var(--spacing-sm);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
 }
 
-/* Action Panels */
+/* ===================================================================
+   Action Panels - Parchment Cards
+   =================================================================== */
+
 .action-panels {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--spacing-md);
 }
 
 .panel {
-    background: var(--panel-bg);
-    padding: 10px;
-    border-radius: 6px;
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow);
+    background: var(--parchment-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
+    transition: box-shadow 0.25s ease;
+}
+
+.panel:hover {
+    box-shadow: var(--shadow-medium), var(--inner-shadow);
 }
 
 .panel h3 {
-    color: var(--primary-color);
-    font-size: clamp(0.95rem, 2vw, 1.08rem);
-    margin-bottom: 8px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 4px;
+    color: var(--text-main);
+    font-size: clamp(1rem, 2.1vw, 1.15rem);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--parchment-border);
+    padding-bottom: var(--spacing-sm);
+    font-family: "EB Garamond", serif;
 }
 
-/* Settings */
+/* Settings Panel */
 .setting-item {
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-md);
+}
+
+.setting-item:last-child {
+    margin-bottom: 0;
 }
 
 .setting-item label {
     display: block;
     font-weight: 600;
-    margin-bottom: 3px;
-    color: var(--text-color);
-    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-main);
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
 }
 
 .setting-select {
     width: 100%;
-    padding: 6px;
-    border: 2px solid var(--border-color);
-    border-radius: 5px;
-    background: white;
-    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
+    padding: var(--spacing-sm);
+    border: 2px solid var(--parchment-border);
+    border-radius: var(--radius-small);
+    background: #fffef8;
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
+    font-family: "Inter", sans-serif;
+    color: var(--text-main);
     cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: var(--inner-shadow);
+}
+
+.setting-select:hover {
+    border-color: var(--gold-accent);
 }
 
 .setting-select:focus {
     outline: none;
-    border-color: var(--secondary-color);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 3px rgba(197, 154, 55, 0.1);
 }
 
-/* Buildings */
+/* Buildings Panel */
 .building-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: var(--spacing-sm);
 }
 
 .building-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px;
-    background: white;
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-    gap: 6px;
+    padding: var(--spacing-sm);
+    background: #fffef8;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--parchment-border);
+    gap: var(--spacing-sm);
+    transition: all 0.25s ease;
+}
+
+.building-item:hover {
+    box-shadow: var(--shadow-soft);
+    border-color: var(--gold-accent);
 }
 
 .building-info {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: var(--spacing-sm);
     font-weight: 600;
-    font-size: clamp(0.8rem, 1.6vw, 0.85rem);
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
+    color: var(--text-main);
 }
 
 .building-icon {
-    font-size: clamp(1rem, 2vw, 1.1rem);
+    font-size: clamp(1.05rem, 2.1vw, 1.15rem);
+    filter: grayscale(0.2) contrast(0.9);
 }
 
-/* Military */
+/* Military Panel */
 .military-info {
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-sm);
 }
 
 .military-info p {
-    margin: 4px 0;
-    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
+    margin: var(--spacing-xs) 0;
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
+    color: var(--text-main);
 }
 
-/* Advancement Panel */
+.army-preview {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: #fffef8;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--parchment-border);
+}
+
+.trade-preview {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: #fffef8;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--parchment-border);
+}
+
+.trade-preview ul {
+    margin: var(--spacing-xs) 0;
+    padding-left: 20px;
+    font-size: clamp(0.85rem, 1.7vw, 0.9rem);
+}
+
+.trade-preview li {
+    margin: var(--spacing-xs) 0;
+}
+
+/* ===================================================================
+   Advancement Panel
+   =================================================================== */
+
 .advancement-panel {
-    background: var(--panel-bg);
-    padding: 10px;
-    border-radius: 6px;
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow);
+    background: var(--parchment-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
 }
 
 .advancement-panel h3 {
-    color: var(--primary-color);
-    font-size: clamp(0.95rem, 2vw, 1.08rem);
-    margin-bottom: 8px;
+    color: var(--text-main);
+    font-size: clamp(1rem, 2.1vw, 1.15rem);
+    margin-bottom: var(--spacing-md);
+    font-family: "EB Garamond", serif;
 }
 
 .requirements-list {
     display: grid;
-    gap: 6px;
+    gap: var(--spacing-sm);
 }
 
 .requirement-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 8px;
-    background: white;
-    border-radius: 5px;
-    border: 2px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: #fffef8;
+    border-radius: var(--radius-small);
+    border: 2px solid var(--parchment-border);
 }
 
 .requirement-item.met {
-    background: #e8f5e9;
+    background: #f5f9f3;
     border-color: var(--success-color);
 }
 
 .req-name {
     font-weight: 600;
-    font-size: clamp(0.8rem, 1.6vw, 0.85rem);
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
+    color: var(--text-main);
 }
 
 .req-progress {
     font-family: "Courier New", monospace;
-    font-weight: bold;
-    font-size: clamp(0.8rem, 1.6vw, 0.85rem);
+    font-weight: 700;
+    font-size: clamp(0.85rem, 1.7vw, 0.92rem);
 }
 
 .req-status {
-    font-size: clamp(0.95rem, 1.8vw, 1rem);
+    font-size: clamp(1rem, 1.9vw, 1.05rem);
 }
 
 .max-rank {
     text-align: center;
     color: var(--success-color);
-    font-size: clamp(0.95rem, 1.8vw, 1rem);
-    font-weight: bold;
+    font-size: clamp(1rem, 1.9vw, 1.05rem);
+    font-weight: 600;
 }
 
-/* Round Actions */
+/* ===================================================================
+   Round Actions - Main CTA
+   =================================================================== */
+
 .round-actions {
-    margin-top: 12px;
+    margin-top: var(--spacing-md);
     text-align: center;
 }
 
 .btn-finish-round {
-    background: var(--secondary-color);
-    color: var(--text-color);
-    font-weight: bold;
+    background: var(--gold-accent);
+    color: var(--text-main);
+    border: 2px solid var(--gold-dark);
+    font-weight: 700;
+    font-size: clamp(1rem, 2.1vw, 1.15rem);
+    padding: var(--spacing-md) var(--spacing-xl);
+    box-shadow: var(--shadow-medium);
 }
 
-.btn-finish-round:hover {
-    background: #b8860b;
+.btn-finish-round:hover:not(.disabled):not(:disabled) {
+    background: var(--gold-light);
+    box-shadow: var(--shadow-hover);
 }
 
-/* Modal Styles */
+/* ===================================================================
+   Modal Styles
+   =================================================================== */
+
 #modal-container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(63, 52, 38, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    padding: 8px;
+    padding: var(--spacing-md);
+    backdrop-filter: blur(2px);
 }
 
 .modal {
-    background: var(--panel-bg);
-    padding: 15px;
-    border-radius: 8px;
-    border: 3px solid var(--border-color);
-    max-width: 450px;
+    background: var(--parchment-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-large);
+    border: 3px solid var(--parchment-border);
+    max-width: 500px;
     max-height: 85vh;
     overflow-y: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 36px rgba(63, 52, 38, 0.4);
     width: 100%;
 }
 
 .modal h2 {
-    color: var(--primary-color);
-    margin-bottom: 12px;
-    font-size: clamp(1.2rem, 2.8vw, 1.4rem);
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
 }
 
 .modal-close {
     float: right;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     cursor: pointer;
-    color: #666;
+    color: var(--text-secondary);
+    transition: color 0.25s ease;
 }
 
 .modal-close:hover {
     color: var(--danger-color);
 }
 
-/* Hint Text */
+/* ===================================================================
+   Utility Classes
+   =================================================================== */
+
 .hint {
-    color: #666;
+    color: var(--text-muted);
     font-style: italic;
-    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
-    margin-top: 6px;
+    font-size: clamp(0.8rem, 1.6vw, 0.88rem);
+    margin-top: var(--spacing-xs);
+    line-height: 1.5;
 }
 
-/* Responsive Design */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-20 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.hidden {
+    display: none;
+}
+
+/* ===================================================================
+   HTMX Loading States - Smooth Transitions
+   =================================================================== */
+
+.htmx-request {
+    opacity: 0.7;
+    transition: opacity 0.4s ease;
+}
+
+.htmx-settling {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* ===================================================================
+   Pixel Art Rendering - Keep Sharp Edges
+   =================================================================== */
+
+img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.game-artwork,
+.pixel-art {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* ===================================================================
+   Responsive Design - Mobile First
+   =================================================================== */
+
 @media (max-width: 1024px) {
     .container {
-        padding: 6px;
+        padding: var(--spacing-sm);
     }
 
     .action-panels {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
+    :root {
+        --spacing-md: 10px;
+        --spacing-lg: 14px;
+    }
+
     .container {
-        padding: 4px;
+        padding: var(--spacing-xs);
     }
 
     .game-view {
-        padding: 3px;
+        padding: var(--spacing-xs);
     }
 
     .resources-bar {
         grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
+        gap: var(--spacing-xs);
     }
 
     .action-panels {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: var(--spacing-sm);
     }
 
     .form-buttons {
@@ -662,88 +940,55 @@ body {
     }
 
     .game-view .game-header {
-        padding: 6px 8px;
+        padding: var(--spacing-sm);
     }
 }
 
 @media (max-width: 480px) {
     body {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .resources-bar {
         grid-template-columns: 1fr;
-        gap: 4px;
+        gap: var(--spacing-xs);
     }
 
     .resource-item {
-        padding: 5px 6px;
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     .panel {
-        padding: 8px;
+        padding: var(--spacing-sm);
     }
 
-    .castle-section {
-        padding: 8px;
+    .kingdom-section {
+        padding: var(--spacing-sm);
     }
 
     .action-panels {
-        gap: 6px;
+        gap: var(--spacing-xs);
     }
 }
 
-/* Very small screens */
 @media (max-width: 360px) {
     body {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .container {
-        padding: 3px;
+        padding: var(--spacing-xs);
     }
 
     .btn {
-        padding: 6px 10px;
+        padding: 7px 12px;
     }
 }
 
-/* High DPI displays - scale down slightly */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    body {
-        font-size: 14px;
-    }
-}
+/* ===================================================================
+   Print Styles
+   =================================================================== */
 
-/* Loading Animation */
-.htmx-request {
-    opacity: 0.7;
-    transition: opacity 0.3s;
-}
-
-.htmx-settling {
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
-/* Utility Classes */
-.text-center {
-    text-align: center;
-}
-
-.mt-20 {
-    margin-top: 15px;
-}
-
-.mb-20 {
-    margin-bottom: 15px;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Print styles - if needed */
 @media print {
     body {
         background: white;
@@ -753,21 +998,584 @@ body {
     button {
         display: none;
     }
+
+    .panel,
+    .kingdom-section,
+    .advancement-panel {
+        box-shadow: none;
+        border: 1px solid var(--parchment-border);
+    }
 }
 
-/* Pixel Art Image Rendering - Keep Sharp Edges */
-img {
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+/* ===================================================================
+   About Page Styles
+   =================================================================== */
+
+.about-content {
+    text-align: left;
+    margin: var(--spacing-lg) 0;
 }
 
-/* For game artwork specifically */
-.game-artwork,
-.pixel-art {
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+.about-section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: #fffef8;
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft);
+}
+
+.about-section h3 {
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(1.1rem, 2.3vw, 1.35rem);
+}
+
+.about-section p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+    color: var(--text-main);
+}
+
+.about-section p:last-child {
+    margin-bottom: 0;
+}
+
+.gameplay-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.gameplay-list li {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    background: var(--parchment-light);
+    border-radius: var(--radius-small);
+    border-left: 4px solid var(--gold-accent);
+    transition: all 0.25s ease;
+}
+
+.gameplay-list li:hover {
+    box-shadow: var(--shadow-soft);
+    transform: translateX(2px);
+}
+
+.gameplay-list li strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.ranks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.rank-item {
+    padding: var(--spacing-md);
+    background: var(--parchment-light);
+    border-radius: var(--radius-small);
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-main);
+    border: 2px solid var(--parchment-border);
+    transition: all 0.25s ease;
+}
+
+.rank-item:hover {
+    border-color: var(--gold-accent);
+    box-shadow: var(--shadow-soft);
+}
+
+.license-section {
+    background: #fdfbf0;
+    border-left: 4px solid var(--gold-accent);
+}
+
+/* ===================================================================
+   Army & Trade Pages Styles
+   =================================================================== */
+
+.army-view,
+.trade-view {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.page-header h1 {
+    margin: 0;
+    color: var(--text-main);
+    font-family: "EB Garamond", serif;
+}
+
+.page-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.info-panel,
+.actions-panel {
+    background: var(--parchment-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft), var(--inner-shadow);
+}
+
+.info-panel h2 {
+    margin-top: 0;
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+}
+
+.info-text {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+}
+
+.stats-card {
+    background: #fffef8;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-small);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid var(--parchment-border);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--parchment-border);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.available-card {
+    background: #f5f9f3;
+    border-left: 4px solid var(--success-color);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-small);
+}
+
+.available-card p {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.available-card ul {
+    margin: var(--spacing-sm) 0 0 0;
+    padding-left: 20px;
+}
+
+.available-card li {
+    color: var(--success-color);
+    margin: var(--spacing-xs) 0;
+}
+
+.actions-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.action-card {
+    background: #fffef8;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft);
+}
+
+.action-card h3 {
+    margin-top: 0;
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+}
+
+.action-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.action-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.quick-select {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.quick-label {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.btn-quick {
+    padding: 6px 14px;
+    background: var(--parchment-light);
+    border: 1px solid var(--parchment-border);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-family: "Inter", sans-serif;
+    color: var(--text-main);
+    transition: all 0.25s ease;
+    font-weight: 500;
+}
+
+.btn-quick:hover {
+    background: var(--gold-accent);
+    border-color: var(--gold-dark);
+    box-shadow: var(--shadow-soft);
+}
+
+.help-panel {
+    background: #fdfbf0;
+    border-left: 4px solid var(--gold-accent);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-small);
+    box-shadow: var(--shadow-soft);
+}
+
+.help-panel h3 {
+    margin-top: 0;
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+}
+
+.help-list {
+    margin: var(--spacing-sm) 0 0 0;
+    padding-left: 20px;
+}
+
+.help-list li {
+    color: var(--text-main);
+    margin: var(--spacing-sm) 0;
+    line-height: 1.6;
+}
+
+.help-list li strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .page-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===================================================================
+   Highscores Page Styles
+   =================================================================== */
+
+.highscores-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.highscores-content {
+    margin: var(--spacing-xl) 0;
+}
+
+.highscores-table {
+    width: 100%;
+    background: #fffef8;
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+.highscores-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.highscores-table thead {
+    background: var(--parchment-light);
+}
+
+.highscores-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-family: "EB Garamond", serif;
+    font-weight: 600;
+    color: var(--text-main);
+    border-bottom: 2px solid var(--parchment-border);
+    font-size: clamp(1rem, 2vw, 1.1rem);
+}
+
+.highscores-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--parchment-border);
+    color: var(--text-main);
+}
+
+.highscores-table tr:last-child td {
+    border-bottom: none;
+}
+
+.highscores-table tbody tr {
+    transition: background 0.25s ease;
+}
+
+.highscores-table tbody tr:hover {
+    background: var(--parchment-light);
+}
+
+.rank-col {
+    width: 80px;
+    text-align: center;
+}
+
+.rank-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--gold-accent);
+    color: var(--text-main);
+    border-radius: var(--radius-small);
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.name-col {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.score-col {
+    text-align: right;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: var(--gold-accent);
+}
+
+.difficulty-col {
+    text-align: center;
+    width: 120px;
+}
+
+.difficulty-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.difficulty-badge.easy {
+    background: #f5f9f3;
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.difficulty-badge.medium {
+    background: #fdfbf0;
+    color: var(--warning-color);
+    border: 1px solid var(--warning-color);
+}
+
+.difficulty-badge.hard {
+    background: #f9f3f2;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+.no-scores {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: #fffef8;
+    border-radius: var(--radius-medium);
+    border: 2px dashed var(--parchment-border);
+}
+
+.no-scores p {
+    font-size: 1.2rem;
+    margin: var(--spacing-sm) 0;
+    color: var(--text-main);
+}
+
+.no-scores .hint {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .highscores-table th,
+    .highscores-table td {
+        padding: var(--spacing-sm);
+    }
+
+    .rank-col,
+    .difficulty-col {
+        width: 60px;
+    }
+
+    .rank-badge {
+        font-size: 0.9em;
+        padding: 4px 8px;
+    }
+
+    .score-col {
+        font-size: 1rem;
+    }
+
+    .difficulty-badge {
+        font-size: 0.75em;
+        padding: 4px 10px;
+    }
+}
+
+/* ===================================================================
+   Report Page Styles
+   =================================================================== */
+
+.report-view {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.report-header h1 {
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-sm);
+}
+
+.report-content {
+    background: var(--parchment-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-large);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-medium), var(--inner-shadow);
+    margin-bottom: var(--spacing-lg);
+}
+
+.report-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.report-section:last-child {
+    margin-bottom: 0;
+}
+
+.report-section h2 {
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--parchment-border);
+    padding-bottom: var(--spacing-sm);
+}
+
+.report-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.report-list li {
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    background: #fffef8;
+    border-radius: var(--radius-small);
+    border-left: 3px solid var(--gold-accent);
+}
+
+.report-positive {
+    border-left-color: var(--success-color);
+    background: #f5f9f3;
+}
+
+.report-negative {
+    border-left-color: var(--danger-color);
+    background: #f9f3f2;
+}
+
+.report-neutral {
+    border-left-color: var(--gold-accent);
+}
+
+.report-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--parchment-border);
+}
+
+.report-item:last-child {
+    border-bottom: none;
+}
+
+.report-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.report-value {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.report-value.positive {
+    color: var(--success-color);
+}
+
+.report-value.negative {
+    color: var(--danger-color);
+}
+
+.report-value.neutral {
+    color: var(--gold-accent);
 }

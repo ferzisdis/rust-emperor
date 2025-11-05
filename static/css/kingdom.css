@@ -1,41 +1,87 @@
-/* Kingdom Visual Representation Styles */
+/* ===================================================================
+   Kingdom Visual Representation - Medieval Manuscript Frame Style
+   Pixel art displayed in decorative parchment frame
+   =================================================================== */
 
-/* Kingdom Section Container */
+/* Kingdom Section Container - Parchment Card */
 .kingdom-section {
-    background: var(--panel-bg);
-    padding: 10px;
-    border-radius: 6px;
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow);
-    margin-bottom: 10px;
+    background: var(--parchment-light);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-large);
+    border: 2px solid var(--parchment-border);
+    box-shadow: var(--shadow-medium), var(--inner-shadow);
+    margin-bottom: var(--spacing-md);
 }
 
-/* Kingdom Canvas - The main visual area */
+.kingdom-section > h3 {
+    font-family: "Uncial Antiqua", "EB Garamond", serif;
+    text-align: center;
+    color: var(--text-main);
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    letter-spacing: 0.02em;
+    text-shadow: 1px 1px 2px rgba(164, 139, 103, 0.2);
+}
+
+/* Kingdom Canvas - Medieval Map Plate Frame */
 .kingdom-canvas {
     position: relative;
-    margin: auto;
-    width: 384px;
-    height: 256px;
-    background: linear-gradient(
-        to bottom,
-        #87ceeb 0%,
-        #87ceeb 35%,
-        #90ee90 35%,
-        #8fbc8f 100%
-    );
+    margin: 0 auto var(--spacing-md);
+    width: 387px;
+    height: 259px;
     overflow: hidden;
+
+    /* Decorative frame styling */
+    border: 3px solid var(--parchment-border);
+    border-radius: var(--radius-small);
+    box-shadow:
+        var(--shadow-soft),
+        inset 0 0 8px rgba(164, 139, 103, 0.15);
+
+    /* Subtle corner embellishments using pseudo-elements */
+    position: relative;
+}
+
+/* Corner ornamental flourishes - very subtle */
+.kingdom-canvas::before,
+.kingdom-canvas::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--parchment-border);
+    opacity: 0.4;
+    z-index: 100;
+}
+
+.kingdom-canvas::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+}
+
+.kingdom-canvas::after {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius: 4px;
 }
 
 /* Background Land */
 .kingdom-land {
     position: absolute;
     bottom: 0;
+    left: 0;
     max-width: 384px;
+    width: 100%;
     height: auto;
     z-index: 1;
 }
 
-/* Base styles for all kingdom elements */
+/* Base styles for all kingdom elements - Sharp Pixel Art */
 .kingdom-castle,
 .kingdom-building {
     position: absolute;
@@ -46,7 +92,10 @@
     image-rendering: crisp-edges;
 }
 
-/* Castle Structures - Positioned from center */
+/* ===================================================================
+   Castle Structures - Positioned from center
+   =================================================================== */
+
 .castle-main {
     top: 28px;
     left: calc(50%);
@@ -116,7 +165,10 @@
     z-index: 22;
 }
 
-/* Farms - Left side of castle */
+/* ===================================================================
+   Farms - Left side of castle
+   =================================================================== */
+
 .farm-1 {
     top: 68px;
     left: calc(50% - 108px);
@@ -171,7 +223,10 @@
     z-index: 16;
 }
 
-/* Markets - Right side of castle */
+/* ===================================================================
+   Markets - Right side of castle
+   =================================================================== */
+
 .market-1 {
     top: 72px;
     left: calc(50% + 88px);
@@ -226,7 +281,10 @@
     z-index: 16;
 }
 
-/* Mines - Bottom left area */
+/* ===================================================================
+   Mines - Bottom left area
+   =================================================================== */
+
 .mine-1 {
     top: 188px;
     left: calc(50% - 108px);
@@ -254,7 +312,10 @@
     z-index: 9;
 }
 
-/* Smithies - Bottom right area */
+/* ===================================================================
+   Smithies - Bottom right area
+   =================================================================== */
+
 .smithy-1 {
     top: 168px;
     left: calc(50% + 64px);
@@ -282,256 +343,55 @@
     z-index: 9;
 }
 
-/* Castle Info Section below the visual */
+/* ===================================================================
+   Castle Info Section - Below the Visual
+   =================================================================== */
+
 .castle-info {
     text-align: center;
-    padding-top: 10px;
-    border-top: 2px solid var(--border-color);
+    padding-top: var(--spacing-md);
+    border-top: 2px solid var(--parchment-border);
+    margin-top: var(--spacing-md);
 }
 
 .castle-info h3 {
-    color: var(--primary-color);
+    font-family: "EB Garamond", serif;
+    color: var(--text-main);
     font-size: clamp(1rem, 2.2vw, 1.15rem);
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-sm);
 }
 
-/* Responsive adjustments for kingdom canvas */
+/* ===================================================================
+   Responsive adjustments for kingdom canvas
+   =================================================================== */
+
 @media (max-width: 768px) {
     .kingdom-canvas {
-        height: 380px;
         max-width: 100%;
-    }
-
-    /* Scale down building sizes */
-    .castle-main,
-    .castle-main-upgrade {
-        width: 60px;
-        bottom: 160px;
-    }
-
-    .castle-left-tower,
-    .castle-right-tower {
-        width: 45px;
-        bottom: 140px;
-    }
-
-    .castle-left-wing,
-    .castle-right-wing {
-        width: 40px;
-        bottom: 155px;
-    }
-
-    .castle-spire-left,
-    .castle-spire-right {
-        width: 35px;
-        bottom: 175px;
-    }
-
-    .farm-1,
-    .farm-2,
-    .farm-3,
-    .farm-4,
-    .farm-5,
-    .farm-6,
-    .market-1,
-    .market-2,
-    .market-3,
-    .market-4,
-    .market-5,
-    .market-6,
-    .mine-1,
-    .mine-2,
-    .mine-3,
-    .smithy-1,
-    .smithy-2,
-    .smithy-3 {
-        width: 40px;
+        height: auto;
+        aspect-ratio: 384 / 256;
     }
 }
 
 @media (max-width: 480px) {
     .kingdom-canvas {
-        height: 320px;
+        width: 100%;
+        max-width: 360px;
     }
 
-    /* Further scale down for small screens */
-    .castle-main,
-    .castle-main-upgrade {
-        width: 50px;
-        bottom: 140px;
+    .kingdom-section > h3 {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
     }
+}
 
-    .castle-left-tower,
-    .castle-right-tower {
-        width: 38px;
-        bottom: 125px;
-    }
-
-    .castle-left-wing,
-    .castle-right-wing {
-        width: 35px;
-        bottom: 135px;
-    }
-
-    .castle-spire-left,
-    .castle-spire-right {
-        width: 30px;
-        bottom: 155px;
-    }
-
-    .farm-1,
-    .farm-2,
-    .farm-3,
-    .farm-4,
-    .farm-5,
-    .farm-6,
-    .market-1,
-    .market-2,
-    .market-3,
-    .market-4,
-    .market-5,
-    .market-6 {
-        width: 36px;
-    }
-
-    .mine-1,
-    .mine-2,
-    .mine-3,
-    .smithy-1,
-    .smithy-2,
-    .smithy-3 {
-        width: 38px;
-    }
-
-    /* Adjust positions for smaller screens */
-    .farm-1 {
-        left: calc(50% - 75px);
-        bottom: 140px;
-    }
-    .farm-2 {
-        left: calc(50% - 105px);
-        bottom: 115px;
-    }
-    .farm-3 {
-        left: calc(50% - 115px);
-        bottom: 165px;
-    }
-    .farm-4 {
-        left: calc(50% - 130px);
-        bottom: 85px;
-    }
-    .farm-5 {
-        left: calc(50% - 80px);
-        bottom: 60px;
-    }
-    .farm-6 {
-        left: calc(50% - 50px);
-        bottom: 60px;
-    }
-
-    .market-1 {
-        left: calc(50% + 75px);
-        bottom: 140px;
-    }
-    .market-2 {
-        left: calc(50% + 105px);
-        bottom: 115px;
-    }
-    .market-3 {
-        left: calc(50% + 115px);
-        bottom: 165px;
-    }
-    .market-4 {
-        left: calc(50% + 130px);
-        bottom: 85px;
-    }
-    .market-5 {
-        left: calc(50% + 80px);
-        bottom: 60px;
-    }
-    .market-6 {
-        left: calc(50% + 50px);
-        bottom: 60px;
-    }
-
-    .mine-1 {
-        left: calc(50% - 140px);
-        bottom: 25px;
-    }
-    .mine-2 {
-        left: calc(50% - 100px);
-        bottom: 22px;
-    }
-    .mine-3 {
-        left: calc(50% - 165px);
-        bottom: 30px;
-    }
-
-    .smithy-1 {
-        left: calc(50% + 140px);
-        bottom: 25px;
-    }
-    .smithy-2 {
-        left: calc(50% + 100px);
-        bottom: 22px;
-    }
-    .smithy-3 {
-        left: calc(50% + 165px);
-        bottom: 30px;
+@media (max-width: 400px) {
+    .kingdom-canvas {
+        max-width: 320px;
     }
 }
 
 @media (max-width: 360px) {
     .kingdom-canvas {
-        height: 280px;
-    }
-
-    /* Minimal sizes for very small screens */
-    .castle-main,
-    .castle-main-upgrade {
-        width: 45px;
-        bottom: 120px;
-    }
-
-    .castle-left-tower,
-    .castle-right-tower {
-        width: 35px;
-        bottom: 110px;
-    }
-
-    .castle-left-wing,
-    .castle-right-wing {
-        width: 32px;
-        bottom: 118px;
-    }
-
-    .castle-spire-left,
-    .castle-spire-right {
-        width: 28px;
-        bottom: 135px;
-    }
-
-    .farm-1,
-    .farm-2,
-    .farm-3,
-    .farm-4,
-    .farm-5,
-    .farm-6,
-    .market-1,
-    .market-2,
-    .market-3,
-    .market-4,
-    .market-5,
-    .market-6 {
-        width: 32px;
-    }
-
-    .mine-1,
-    .mine-2,
-    .mine-3,
-    .smithy-1,
-    .smithy-2,
-    .smithy-3 {
-        width: 34px;
+        max-width: 300px;
     }
 }
