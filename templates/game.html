@@ -4,40 +4,42 @@
 
 {% block content %}
 <div class="game-view">
-    <!-- Header with player info -->
-    <div class="game-header">
-        <div class="player-info">
-            <h1>{{ state.get_grade_title() }} {{ state.user_name }}</h1>
-            <p class="year">Year {{ state.year }} | Round {{ state.round }}</p>
+    <!-- Combined Header with Resources -->
+    <div class="game-header-combined">
+        <div class="player-info-inline">
+            <span class="player-title">{{ state.get_grade_title() }} {{ state.user_name }}</span>
+            <span class="player-meta">(Year {{ state.year }} / Round {{ state.round }})</span>
         </div>
-    </div>
-
-    <!-- Resources Bar -->
-    <div class="resources-bar">
-        <div class="resource-item">
-            <span class="resource-icon">💰</span>
-            <span class="resource-label">Gold:</span>
-            <span class="resource-value">{{ state.gold }}</span>
-        </div>
-        <div class="resource-item">
-            <span class="resource-icon">🌾</span>
-            <span class="resource-label">Food:</span>
-            <span class="resource-value">{{ state.food_quantity }}</span>
-        </div>
-        <div class="resource-item">
-            <span class="resource-icon">👥</span>
-            <span class="resource-label">Citizens:</span>
-            <span class="resource-value">{{ state.man_quantity }}</span>
-        </div>
-        <div class="resource-item">
-            <span class="resource-icon">⚔️</span>
-            <span class="resource-label">Soldiers:</span>
-            <span class="resource-value">{{ state.soldier_quantity }}</span>
-        </div>
-        <div class="resource-item">
-            <span class="resource-icon">❤️</span>
-            <span class="resource-label">Popularity:</span>
-            <span class="resource-value">{{ state.popularity_percent }}%</span>
+        <div class="resources-inline">
+            <div class="resource-inline">
+                <span class="resource-icon">💰</span>
+                <span class="resource-label">Gold</span>
+                <span class="resource-value">{{ state.gold }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
+                <span class="resource-icon">🌾</span>
+                <span class="resource-label">Food</span>
+                <span class="resource-value">{{ state.food_quantity }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
+                <span class="resource-icon">👥</span>
+                <span class="resource-label">Citizen</span>
+                <span class="resource-value">{{ state.man_quantity }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
+                <span class="resource-icon">⚔️</span>
+                <span class="resource-label">Army</span>
+                <span class="resource-value">{{ state.soldier_quantity }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
+                <span class="resource-icon">❤️</span>
+                <span class="resource-label">Popularity</span>
+                <span class="resource-value">{{ state.popularity_percent }}%</span>
+            </div>
         </div>
     </div>
 

@@ -411,75 +411,74 @@ h3 {
     max-width: 100%;
 }
 
-/* Game Header - Player Info */
-.game-view .game-header {
+/* ===================================================================
+   Combined Game Header with Inline Resources
+   =================================================================== */
+
+.game-header-combined {
     background: var(--parchment-light);
     padding: var(--spacing-md);
     border-radius: var(--radius-medium);
     border: 2px solid var(--parchment-border);
     margin-bottom: var(--spacing-md);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     box-shadow: var(--shadow-soft), var(--inner-shadow);
 }
 
-.player-info h1 {
-    font-size: clamp(1.2rem, 2.8vw, 1.5rem);
-    color: var(--text-main);
-    margin-bottom: var(--spacing-xs);
+.player-info-inline {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
 }
 
-.year {
+.player-title {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.player-meta {
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
     color: var(--text-secondary);
-    font-size: clamp(0.8rem, 1.7vw, 0.9rem);
     font-family: "EB Garamond", serif;
     font-style: italic;
 }
 
-/* ===================================================================
-   Resources Bar - Engraved Icon Style
-   =================================================================== */
-
-.resources-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-}
-
-.resource-item {
-    background: var(--parchment-light);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-small);
-    border: 2px solid var(--parchment-border);
+.resources-inline {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    box-shadow: var(--shadow-soft), var(--inner-shadow);
-    transition: all 0.25s ease;
+    flex-wrap: wrap;
 }
 
-.resource-item:hover {
-    box-shadow: var(--shadow-medium);
+.resource-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.resource-icon {
-    font-size: clamp(1.1rem, 2.3vw, 1.25rem);
+.resource-inline .resource-icon {
+    font-size: clamp(1rem, 2vw, 1.15rem);
     filter: grayscale(0.2) contrast(0.9);
 }
 
-.resource-label {
+.resource-inline .resource-label {
     font-weight: 600;
     color: var(--text-secondary);
     font-size: clamp(0.8rem, 1.6vw, 0.88rem);
 }
 
-.resource-value {
+.resource-inline .resource-value {
     font-weight: 700;
-    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
-    margin-left: auto;
+    font-size: clamp(0.85rem, 1.7vw, 0.95rem);
     color: var(--text-main);
+}
+
+.resource-divider {
+    color: var(--parchment-border);
+    font-weight: 300;
+    opacity: 0.6;
+    padding: 0 4px;
 }
 
 /* ===================================================================
@@ -921,9 +920,16 @@ img {
         padding: var(--spacing-xs);
     }
 
-    .resources-bar {
-        grid-template-columns: repeat(2, 1fr);
+    .game-header-combined {
+        padding: var(--spacing-sm);
+    }
+
+    .resources-inline {
         gap: var(--spacing-xs);
+    }
+
+    .resource-inline .resource-label {
+        display: none;
     }
 
     .action-panels {
@@ -938,10 +944,6 @@ img {
     .building-item {
         flex-wrap: wrap;
     }
-
-    .game-view .game-header {
-        padding: var(--spacing-sm);
-    }
 }
 
 @media (max-width: 480px) {
@@ -949,13 +951,19 @@ img {
         font-size: 14px;
     }
 
-    .resources-bar {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-xs);
+    .player-info-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin-bottom: 8px;
     }
 
-    .resource-item {
-        padding: var(--spacing-xs) var(--spacing-sm);
+    .resources-inline {
+        font-size: 0.85rem;
+    }
+
+    .resource-divider {
+        padding: 0 2px;
     }
 
     .panel {
