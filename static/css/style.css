@@ -555,7 +555,7 @@ h3 {
 
 .action-panels {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
 }
 
@@ -913,7 +913,7 @@ img {
     }
 
     .action-panels {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
