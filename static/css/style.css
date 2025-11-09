@@ -488,6 +488,7 @@ h3 {
 .game-content {
     display: grid;
     gap: var(--spacing-md);
+    padding-bottom: 60px; /* Space for fixed footer */
 }
 
 /* Kingdom Section - Framed Pixel Art Display */
@@ -762,9 +763,19 @@ h3 {
    Round Actions - Main CTA
    =================================================================== */
 
-.round-actions {
-    margin-top: var(--spacing-md);
+/* Fixed Footer for Finish Round Button */
+.game-footer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(249, 245, 234, 0.95);
+    backdrop-filter: blur(8px);
+    border-top: 2px solid var(--parchment-border);
+    padding: var(--spacing-sm);
     text-align: center;
+    box-shadow: 0 -4px 12px rgba(164, 139, 103, 0.15);
+    z-index: 100;
 }
 
 .btn-finish-round {
@@ -772,8 +783,8 @@ h3 {
     color: var(--text-main);
     border: 2px solid var(--gold-dark);
     font-weight: 700;
-    font-size: clamp(1rem, 2.1vw, 1.15rem);
-    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    padding: var(--spacing-sm) var(--spacing-lg);
     box-shadow: var(--shadow-medium);
 }
 
@@ -944,6 +955,15 @@ img {
     .building-item {
         flex-wrap: wrap;
     }
+
+    .game-footer-fixed {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .btn-finish-round {
+        font-size: 0.9rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
 }
 
 @media (max-width: 480px) {
@@ -956,6 +976,20 @@ img {
         align-items: flex-start;
         gap: 4px;
         margin-bottom: 8px;
+    }
+
+    .game-content {
+        padding-bottom: 60px; /* Reduced footer space on small screens */
+    }
+
+    .game-footer-fixed {
+        padding: var(--spacing-xs);
+    }
+
+    .btn-finish-round {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     .resources-inline {

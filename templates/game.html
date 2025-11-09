@@ -300,13 +300,13 @@
             <p class="max-rank">You have achieved the highest rank!</p>
             {% endif %}
         </div>
+    </div>
 
-        <!-- Finish Round Button -->
-        <div class="round-actions">
-            <button hx-post="/game/finish-round" hx-target="body" hx-swap="innerHTML" class="btn btn-large btn-finish-round">
-                ⏭️ Finish Round &amp; Continue
-            </button>
-        </div>
+    <!-- Fixed Footer with Finish Round Button -->
+    <div class="game-footer-fixed">
+        <button hx-post="/game/finish-round" hx-target="body" hx-swap="innerHTML" class="btn btn-large btn-finish-round">
+            ⏭️ Finish Round &amp; Continue
+        </button>
     </div>
 </div>
 {% endblock %}
