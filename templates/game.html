@@ -254,27 +254,66 @@
             <!-- Trade Panel -->
             <div class="panel">
                 <h3>💱 Trade</h3>
-                <p>Market Places: {{ state.market_quantity }}</p>
-                {% if state.market_quantity > 0 %}
-                <a href="/game/trade" class="btn btn-small" style="display: inline-block; margin: 10px 0;">🏪 Open Market</a>
-                <div class="trade-preview" style="margin-top: 10px;">
-                    <p class="hint">Available trades:</p>
-                    <ul style="margin: 5px 0; padding-left: 20px; font-size: 0.9em;">
-                        <li>🌾 Food (always available)</li>
-                        {% if state.market_quantity > 4 %}
-                        <li>⚙️ Iron (unlocked)</li>
-                        {% else %}
-                        <li style="opacity: 0.5;">🔒 Iron (need 5+ markets)</li>
-                        {% endif %}
-                        {% if state.market_quantity > 9 %}
-                        <li>⚔️ Weapons (unlocked)</li>
-                        {% else %}
-                        <li style="opacity: 0.5;">🔒 Weapons (need 10+ markets)</li>
-                        {% endif %}
-                    </ul>
+                {% if state.market_quantity == 0 %}
+                <p class="hint">Build a market to trade!</p>
+                {% else %}
+                <div class="trade-divider">
+                    <p style="font-size: 0.9em;">Markets: {{ state.market_quantity }}</p>
+                </div>
+
+                <!-- Food Trading -->
+                <div class="trade-inline-section">
+                    <h4>🌾 Food ({{ state.price_for_food }}💰/100)</h4>
+                    <div class="trade-controls">
+                        <select name="quantity" id="trade_food_qty" class="setting-select">
+                            <option value="100">100</option>
+                            <option value="1000">1,000</option>
+                            <option value="10000">10,000</option>
+                        </select>
+                        <button hx-post="/game/trade/buy-food" hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
+                        <button hx-post="/game/trade/sell-food" hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
+                    </div>
+                </div>
+
+                <!-- Iron Trading -->
+                {% if state.market_quantity > 4 %}
+                <div class="trade-inline-section">
+                    <h4>⚙️ Iron ({{ state.price_for_armor }}💰/unit)</h4>
+                    <div class="trade-controls">
+                        <select name="quantity" id="trade_iron_qty" class="setting-select">
+                            <option value="1">1</option>
+                            <option value="10">10</option>
+                            <option value="100">100</option>
+                        </select>
+                        <button hx-post="/game/trade/buy-iron" hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
+                    </div>
                 </div>
                 {% else %}
-                <p class="hint">Build a market to trade!</p>
+                <div class="trade-inline-section trade-locked">
+                    <h4>🔒 Iron</h4>
+                    <p class="hint">Need 5+ markets</p>
+                </div>
+                {% endif %}
+
+                <!-- Weapons Trading -->
+                {% if state.market_quantity > 9 %}
+                <div class="trade-inline-section">
+                    <h4>⚔️ Weapons ({{ state.price_for_weapon }}💰/unit)</h4>
+                    <div class="trade-controls">
+                        <select name="quantity" id="trade_weapon_qty" class="setting-select">
+                            <option value="1">1</option>
+                            <option value="10">10</option>
+                            <option value="100">100</option>
+                        </select>
+                        <button hx-post="/game/trade/buy-weapons" hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
+                    </div>
+                </div>
+                {% else %}
+                <div class="trade-inline-section trade-locked">
+                    <h4>🔒 Weapons</h4>
+                    <p class="hint">Need 10+ markets</p>
+                </div>
+                {% endif %}
                 {% endif %}
             </div>
 

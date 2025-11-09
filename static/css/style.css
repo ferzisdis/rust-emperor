@@ -697,6 +697,52 @@ h3 {
     margin: var(--spacing-xs) 0;
 }
 
+/* Inline Trade Controls */
+.trade-inline-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.trade-inline-section h4 {
+    font-size: clamp(0.9rem, 1.9vw, 0.95rem);
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.trade-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.trade-controls select {
+    flex: 1;
+    min-width: 0;
+}
+
+.trade-controls button {
+    flex: 1;
+    min-width: 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    white-space: nowrap;
+}
+
+.trade-divider {
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--parchment-border);
+}
+
+.trade-locked {
+    opacity: 0.6;
+}
+
+.trade-locked h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
 /* ===================================================================
    Advancement Panel
    =================================================================== */

@@ -8,7 +8,7 @@ use axum::{
 use serde::Deserialize;
 use std::sync::{Arc, RwLock};
 
-use crate::game::{EventGenerator, GameState, TradeOption};
+use crate::game::{EventGenerator, GameState};
 
 // Shared game state (in a real app, use proper session management)
 pub type SharedGameState = Arc<RwLock<Option<GameState>>>;
@@ -38,12 +38,6 @@ pub struct FoodSupplyForm {
 #[derive(Deserialize)]
 pub struct TradeForm {
     quantity: i32,
-}
-
-#[derive(Template)]
-#[template(path = "trade.html")]
-struct TradeTemplate {
-    state: GameState,
 }
 
 #[derive(Template)]
@@ -148,19 +142,6 @@ async fn upgrade_castle(State(game_state): State<SharedGameState>) -> impl IntoR
     Redirect::to("/game")
 }
 
-async fn trade_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
-    let state = game_state.read().unwrap();
-
-    if let Some(ref game) = *state {
-        let template = TradeTemplate {
-            state: game.clone(),
-        };
-        Html(template.render().unwrap())
-    } else {
-        Html("<h1>No active game. Please start a new game.</h1>".to_string())
-    }
-}
-
 async fn buy_food(
     State(game_state): State<SharedGameState>,
     Form(form): Form<TradeForm>,
@@ -172,7 +153,7 @@ async fn buy_food(
     }
 
     drop(state);
-    Redirect::to("/game/trade")
+    Redirect::to("/game")
 }
 
 async fn sell_food(
@@ -186,7 +167,7 @@ async fn sell_food(
     }
 
     drop(state);
-    Redirect::to("/game/trade")
+    Redirect::to("/game")
 }
 
 async fn buy_iron(
@@ -200,7 +181,7 @@ async fn buy_iron(
     }
 
     drop(state);
-    Redirect::to("/game/trade")
+    Redirect::to("/game")
 }
 
 async fn buy_weapons(
@@ -214,7 +195,7 @@ async fn buy_weapons(
     }
 
     drop(state);
-    Redirect::to("/game/trade")
+    Redirect::to("/game")
 }
 
 async fn army_view(State(game_state): State<SharedGameState>) -> impl IntoResponse {
@@ -484,7 +465,6 @@ pub fn game_routes() -> Router<SharedGameState> {
         .route("/game/build-market", post(build_market))
         .route("/game/upgrade-castle", post(upgrade_castle))
         .route("/game/finish-round", post(finish_round))
-        .route("/game/trade", get(trade_view))
         .route("/game/trade/buy-food", post(buy_food))
         .route("/game/trade/sell-food", post(sell_food))
         .route("/game/trade/buy-iron", post(buy_iron))
