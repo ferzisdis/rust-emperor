@@ -146,22 +146,6 @@
                 {% endif %}
             </div>
 
-            <!-- Castle Info and Upgrade -->
-            <div class="castle-info">
-                <h3>🏰 Castle Level {{ state.castle_level }}</h3>
-                {% if state.castle_level < 8 %}
-                <button
-                    hx-post="/game/upgrade-castle"
-                    hx-target="body"
-                    hx-swap="innerHTML"
-                    class="btn btn-upgrade"
-                    {% if !state.can_upgrade_castle() %}disabled{% endif %}>
-                    ⬆️ Upgrade ({{ state.price_for_castle }} gold)
-                </button>
-                {% else %}
-                <p class="max-level">Maximum Level Reached!</p>
-                {% endif %}
-            </div>
         </div>
 
         <!-- Action Panels -->
@@ -197,6 +181,19 @@
             <div class="panel">
                 <h3>🏗️ Buildings</h3>
                 <div class="building-list">
+                    <div class="building-item">
+                        <span class="building-info">
+                            <span class="building-icon">🏰</span>
+                            <span>Castle: Level {{ state.castle_level }}</span>
+                        </span>
+                        {% if state.castle_level < 8 %}
+                        <button hx-post="/game/upgrade-castle" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_upgrade_castle() %}disabled{% endif %}>
+                            Upgrade ({{ state.price_for_castle }} 💰)
+                        </button>
+                        {% else %}
+                        <button class="btn btn-small" disabled>Max Level</button>
+                        {% endif %}
+                    </div>
                     <div class="building-item">
                         <span class="building-info">
                             <span class="building-icon">🌾</span>
