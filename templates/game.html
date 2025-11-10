@@ -237,91 +237,53 @@
             <div class="panel">
                 <h3>⚔️ Military</h3>
                 
-                <!-- Military Stats -->
-                <div class="military-info" style="margin-bottom: 12px;">
-                    <p style="margin: 4px 0;">⚔️ Soldiers: <strong></strong>{{ state.soldier_quantity }}</strong></p>
-                    <p style="margin: 4px 0;">🗡️ Weapons: <strong></strong>{{ state.weapon_quantity }}</strong></p>
-                    <p style="margin: 4px 0;">⛏️ Iron: <strong>{{ state.iron_quantity }}</strong></p>
+                <div class="trade-divider">
+                    <p style="font-size: 0.9em;">Soldiers: {{ state.soldier_quantity }} | Weapons: {{ state.weapon_quantity }}</p>
+                    <p class="hint" style="font-size: 0.85em; margin-top: 4px;">Cost: {{ state.soldier_price }} 💰 | Need: 1 weapon + 1 citizen</p>
                 </div>
 
-                <!-- Recruitment Info -->
-                <div style="background: rgba(0,0,0,0.05); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 0.85em;">
-                    <p style="margin: 3px 0;"><strong>Cost per soldier:</strong> {{ state.soldier_price }} 💰</p>
-                    <p style="margin: 3px 0;"><strong>Requirements:</strong> 1 weapon, 1 citizen</p>
-                    <p style="margin: 3px 0; color: #c0392b;"><strong>Min citizens:</strong> 200 must remain</p>
+                <!-- Recruit Soldiers -->
+                <div class="trade-inline-section">
+                    <h4>🎖️ Recruit Soldiers</h4>
+                    <div class="trade-controls">
+                        <select name="quantity" id="recruit_qty" class="setting-select">
+                            <option value="1">1</option>
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <button 
+                            hx-post="/game/army/recruit" 
+                            hx-vals='js:{quantity: document.getElementById("recruit_qty").value}' 
+                            hx-target="body" 
+                            hx-swap="innerHTML" 
+                            class="btn btn-small"
+                            {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
+                            Recruit
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Recruitment Limits -->
-                <div style="font-size: 0.85em; margin-bottom: 12px; padding: 6px; background: rgba(52, 152, 219, 0.1); border-radius: 4px;">
-                    <p style="margin: 2px 0; font-weight: bold; color: #2980b9;">Max recruitable:</p>
-                    <p style="margin: 2px 0;">By gold: {{ state.max_recruitable_by_gold() }}</p>
-                    <p style="margin: 2px 0;">By weapons: {{ state.weapon_quantity }}</p>
-                    <p style="margin: 2px 0;">By citizens: {{ state.max_recruitable_by_citizens() }}</p>
-                </div>
-
-                <!-- Recruit Soldiers Form -->
-                <form hx-post="/game/army/recruit" hx-target="body" hx-swap="innerHTML" style="margin-bottom: 10px;">
-                    <div style="margin-bottom: 8px;">
-                        <label for="recruit_quantity" style="display: block; margin-bottom: 4px; font-size: 0.9em; font-weight: bold;">Recruit Soldiers:</label>
-                        <input
-                            type="number"
-                            id="recruit_quantity"
-                            name="quantity"
-                            min="1"
-                            max="1000"
-                            value="1"
-                            style="width: 100%; padding: 6px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 0.9em;"
-                            required
-                        />
+                <!-- Discharge Soldiers -->
+                <div class="trade-inline-section">
+                    <h4>🏠 Discharge Soldiers</h4>
+                    <div class="trade-controls">
+                        <select name="quantity" id="discharge_qty" class="setting-select">
+                            <option value="1">1</option>
+                            <option value="10">10</option>
+                            <option value="50">50</option>
+                            <option value="{{ state.soldier_quantity }}">All ({{ state.soldier_quantity }})</option>
+                        </select>
+                        <button 
+                            hx-post="/game/army/discharge" 
+                            hx-vals='js:{quantity: document.getElementById("discharge_qty").value}' 
+                            hx-target="body" 
+                            hx-swap="innerHTML" 
+                            class="btn btn-small"
+                            {% if state.soldier_quantity == 0 %}disabled{% endif %}>
+                            Discharge
+                        </button>
                     </div>
-                    <div style="display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap;">
-                        <button type="button" onclick="document.getElementById('recruit_quantity').value='1'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">1</button>
-                        <button type="button" onclick="document.getElementById('recruit_quantity').value='10'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">10</button>
-                        <button type="button" onclick="document.getElementById('recruit_quantity').value='50'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">50</button>
-                        <button type="button" onclick="document.getElementById('recruit_quantity').value='100'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">100</button>
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-small"
-                        style="width: 100%;"
-                        {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
-                        🎖️ Recruit Soldiers
-                    </button>
-                </form>
-
-                <!-- Discharge Soldiers Form -->
-                <form hx-post="/game/army/discharge" hx-target="body" hx-swap="innerHTML">
-                    <div style="margin-bottom: 8px;">
-                        <label for="discharge_quantity" style="display: block; margin-bottom: 4px; font-size: 0.9em; font-weight: bold;">Discharge Soldiers:</label>
-                        <input
-                            type="number"
-                            id="discharge_quantity"
-                            name="quantity"
-                            min="1"
-                            max="{{ state.soldier_quantity }}"
-                            value="1"
-                            style="width: 100%; padding: 6px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 0.9em;"
-                            required
-                        />
-                    </div>
-                    <div style="display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap;">
-                        <button type="button" onclick="document.getElementById('discharge_quantity').value='1'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">1</button>
-                        <button type="button" onclick="document.getElementById('discharge_quantity').value='10'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">10</button>
-                        <button type="button" onclick="document.getElementById('discharge_quantity').value='50'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">50</button>
-                        <button type="button" onclick="document.getElementById('discharge_quantity').value='{{ state.soldier_quantity }}'" style="flex: 1; padding: 4px; font-size: 0.8em; background: #ecf0f1; border: 1px solid #bdc3c7; border-radius: 3px; cursor: pointer;">All</button>
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-small"
-                        style="width: 100%; background: #95a5a6;"
-                        {% if state.soldier_quantity == 0 %}disabled{% endif %}>
-                        🏠 Discharge (Get {{ state.soldier_price }} 💰 back)
-                    </button>
-                </form>
-
-                <!-- Help Tip -->
-                <div style="margin-top: 12px; padding: 8px; background: rgba(241, 196, 15, 0.1); border-left: 3px solid #f39c12; font-size: 0.8em;">
-                    <p style="margin: 0;"><strong>💡 Tip:</strong> Soldiers are required for rank advancement. Weapons come from smithies using iron from mines.</p>
                 </div>
             </div>
 
