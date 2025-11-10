@@ -2,22 +2,22 @@
 }}{% endblock %} {% block content %}
 <div class="report-view">
     <div class="report-content">
-        <h2>📊 Round Report - Year {{ state.year - 1 }}</h2>
+        <h2><img src="/static/images/deg_castle5.png" alt="Report" style="height: 1.2em; vertical-align: middle;"> Round Report - Year {{ state.year - 1 }}</h2>
 
         <div class="report-section">
-            <h3>💰 Income & Production</h3>
+            <h3><img src="/static/images/deg_gold.png" alt="Gold" style="height: 1em; vertical-align: middle;"> Income & Production</h3>
 
             <div class="report-item">
                 <span class="report-label">Taxes Collected:</span>
                 <span class="report-value positive"
-                    >+{{ state.taxes_value }} 💰</span
+                    >+{{ state.taxes_value }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;"></span
                 >
             </div>
 
             <div class="report-item">
                 <span class="report-label">Market Income:</span>
                 <span class="report-value positive"
-                    >+{{ state.market_place_value }} 💰</span
+                    >+{{ state.market_place_value }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;"></span
                 >
             </div>
 
@@ -26,13 +26,13 @@
                 <span
                     class="report-value {% if state.harvest_value > 0 %}positive{% else %}negative{% endif %}"
                 >
-                    {{ state.harvest_value }} 🌾 ({{ state.harvest_percent }}%)
+                    {{ state.harvest_value }} <img src="/static/images/deg_food.png" alt="Food" style="height: 0.9em; vertical-align: middle;"> ({{ state.harvest_percent }}%)
                 </span>
             </div>
         </div>
 
         <div class="report-section">
-            <h3>📈 Popularity</h3>
+            <h3>Popularity</h3>
 
             <div class="report-item">
                 <span class="report-label">Current Popularity:</span>
@@ -56,7 +56,7 @@
 
         {% match state.last_event_title %} {% when Some with (title) %}
         <div class="report-section event-section">
-            <h3>⚡ Event: {{ title }}</h3>
+            <h3>Event: {{ title }}</h3>
             {% match state.last_event_description %} {% when Some with (desc) %}
             <p class="event-description">{{ desc }}</p>
             {% when None %} {% endmatch %}

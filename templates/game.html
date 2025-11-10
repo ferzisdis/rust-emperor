@@ -12,31 +12,31 @@
         </div>
         <div class="resources-inline">
             <div class="resource-inline">
-                <span class="resource-icon">💰</span>
+                <span class="resource-icon"><img src="/static/images/deg_gold.png" alt="Gold" style="height: 1em; vertical-align: middle;"></span>
                 <span class="resource-label">Gold</span>
                 <span class="resource-value">{{ state.gold }}</span>
             </div>
             <span class="resource-divider">|</span>
             <div class="resource-inline">
-                <span class="resource-icon">🌾</span>
+                <span class="resource-icon"><img src="/static/images/deg_food.png" alt="Food" style="height: 1em; vertical-align: middle;"></span>
                 <span class="resource-label">Food</span>
                 <span class="resource-value">{{ state.food_quantity }}</span>
             </div>
             <span class="resource-divider">|</span>
             <div class="resource-inline">
-                <span class="resource-icon">👥</span>
+                <span class="resource-icon"><img src="/static/images/deg_man.png" alt="Citizens" style="height: 1em; vertical-align: middle;"></span>
                 <span class="resource-label">Citizen</span>
                 <span class="resource-value">{{ state.man_quantity }}</span>
             </div>
             <span class="resource-divider">|</span>
             <div class="resource-inline">
-                <span class="resource-icon">⚔️</span>
+                <span class="resource-icon"><img src="/static/images/deg_soldier.png" alt="Army" style="height: 1em; vertical-align: middle;"></span>
                 <span class="resource-label">Army</span>
                 <span class="resource-value">{{ state.soldier_quantity }}</span>
             </div>
             <span class="resource-divider">|</span>
             <div class="resource-inline">
-                <span class="resource-icon">❤️</span>
+                <span class="resource-icon">♥</span>
                 <span class="resource-label">Popularity</span>
                 <span class="resource-value">{{ state.popularity_percent }}%</span>
             </div>
@@ -47,7 +47,7 @@
     <div class="game-content">
         <!-- Kingdom Visual Representation -->
         <div class="kingdom-section">
-            <h3 class="title-decorative">🏰 Your Kingdom</h3>
+            <h3 class="title-decorative"><img src="/static/images/deg_castle1.png" alt="Castle" style="height: 1em; vertical-align: middle;"> Your Kingdom</h3>
             <div class="kingdom-canvas">
                 <!-- Background Land -->
                 <img src="/static/images/deg_land.png" alt="Land" class="kingdom-land pixel-art" />
@@ -179,16 +179,16 @@
 
             <!-- Buildings Panel -->
             <div class="panel">
-                <h3>🏗️ Buildings</h3>
+                <h3><img src="/static/images/deg_castle1.png" alt="Buildings" style="height: 1em; vertical-align: middle;"> Buildings</h3>
                 <div class="building-list">
                     <div class="building-item">
                         <span class="building-info">
-                            <span class="building-icon">🏰</span>
+                            <span class="building-icon"><img src="/static/images/deg_castle1.png" alt="Castle" style="height: 1em; vertical-align: middle;"></span>
                             <span>Castle: Level {{ state.castle_level }}</span>
                         </span>
                         {% if state.castle_level < 8 %}
                         <button hx-post="/game/upgrade-castle" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_upgrade_castle() %}disabled{% endif %}>
-                            Upgrade ({{ state.price_for_castle }} 💰)
+                            Upgrade ({{ state.price_for_castle }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                         {% else %}
                         <button class="btn btn-small" disabled>Max Level</button>
@@ -196,38 +196,38 @@
                     </div>
                     <div class="building-item">
                         <span class="building-info">
-                            <span class="building-icon">🌾</span>
+                            <span class="building-icon"><img src="/static/images/deg_farm.png" alt="Farm" style="height: 1em; vertical-align: middle;"></span>
                             <span>Farms: {{ state.farm_quantity }}</span>
                         </span>
                         <button hx-post="/game/build-farm" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_farm() %}disabled{% endif %}>
-                            Build ({{ state.price_for_farm }} 💰)
+                            Build ({{ state.price_for_farm }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                     </div>
                     <div class="building-item">
                         <span class="building-info">
-                            <span class="building-icon">⛏️</span>
+                            <span class="building-icon"><img src="/static/images/deg_mine.png" alt="Mine" style="height: 1em; vertical-align: middle;"></span>
                             <span>Mines: {{ state.mine_quantity }}</span>
                         </span>
                         <button hx-post="/game/build-mine" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_mine() %}disabled{% endif %}>
-                            Build ({{ state.price_for_mine }} 💰)
+                            Build ({{ state.price_for_mine }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                     </div>
                     <div class="building-item">
                         <span class="building-info">
-                            <span class="building-icon">🔨</span>
+                            <span class="building-icon"><img src="/static/images/deg_smithy.png" alt="Smithy" style="height: 1em; vertical-align: middle;"></span>
                             <span>Smithies: {{ state.smithy_quantity }}</span>
                         </span>
                         <button hx-post="/game/build-smithy" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_smithy() %}disabled{% endif %}>
-                            Build ({{ state.price_for_smithy }} 💰)
+                            Build ({{ state.price_for_smithy }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                     </div>
                     <div class="building-item">
                         <span class="building-info">
-                            <span class="building-icon">🏪</span>
+                            <span class="building-icon"><img src="/static/images/deg_market.png" alt="Market" style="height: 1em; vertical-align: middle;"></span>
                             <span>Markets: {{ state.market_quantity }}</span>
                         </span>
                         <button hx-post="/game/build-market" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_build_market() %}disabled{% endif %}>
-                            Build ({{ state.price_for_market }} 💰)
+                            Build ({{ state.price_for_market }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                     </div>
                 </div>
@@ -235,16 +235,16 @@
 
             <!-- Military Panel -->
             <div class="panel">
-                <h3>⚔️ Military</h3>
+                <h3><img src="/static/images/deg_soldier.png" alt="Military" style="height: 1em; vertical-align: middle;"> Military</h3>
                 
                 <div class="trade-divider">
                     <p style="font-size: 0.9em;">Soldiers: {{ state.soldier_quantity }} | Weapons: {{ state.weapon_quantity }}</p>
-                    <p class="hint" style="font-size: 0.85em; margin-top: 4px;">Cost: {{ state.soldier_price }} 💰 | Need: 1 weapon + 1 citizen</p>
+                    <p class="hint" style="font-size: 0.85em; margin-top: 4px;">Cost: {{ state.soldier_price }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;"> | Need: 1 weapon + 1 citizen</p>
                 </div>
 
                 <!-- Recruit Soldiers -->
                 <div class="trade-inline-section">
-                    <h4>🎖️ Recruit Soldiers</h4>
+                    <h4><img src="/static/images/deg_soldier.png" alt="Recruit" style="height: 1em; vertical-align: middle;"> Recruit Soldiers</h4>
                     <div class="trade-controls">
                         <select name="quantity" id="recruit_qty" class="setting-select">
                             <option value="1">1</option>
@@ -266,7 +266,7 @@
 
                 <!-- Discharge Soldiers -->
                 <div class="trade-inline-section">
-                    <h4>🏠 Discharge Soldiers</h4>
+                    <h4><img src="/static/images/deg_man.png" alt="Discharge" style="height: 1em; vertical-align: middle;"> Discharge Soldiers</h4>
                     <div class="trade-controls">
                         <select name="quantity" id="discharge_qty" class="setting-select">
                             <option value="1">1</option>
@@ -289,7 +289,7 @@
 
             <!-- Trade Panel -->
             <div class="panel">
-                <h3>💱 Trade</h3>
+                <h3><img src="/static/images/deg_market.png" alt="Trade" style="height: 1em; vertical-align: middle;"> Trade</h3>
                 {% if state.market_quantity == 0 %}
                 <p class="hint">Build a market to trade!</p>
                 {% else %}
@@ -299,7 +299,7 @@
 
                 <!-- Food Trading -->
                 <div class="trade-inline-section">
-                    <h4>🌾 Food ({{ state.price_for_food }}💰/100)</h4>
+                    <h4><img src="/static/images/deg_food.png" alt="Food" style="height: 1em; vertical-align: middle;"> Food ({{ state.price_for_food }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/100)</h4>
                     <div class="trade-controls">
                         <select name="quantity" id="trade_food_qty" class="setting-select">
                             <option value="100">100</option>
@@ -314,7 +314,7 @@
                 <!-- Iron Trading -->
                 {% if state.market_quantity > 4 %}
                 <div class="trade-inline-section">
-                    <h4>⚙️ Iron ({{ state.price_for_armor }}💰/unit)</h4>
+                    <h4><img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron ({{ state.price_for_armor }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/unit)</h4>
                     <div class="trade-controls">
                         <select name="quantity" id="trade_iron_qty" class="setting-select">
                             <option value="1">1</option>
@@ -326,7 +326,7 @@
                 </div>
                 {% else %}
                 <div class="trade-inline-section trade-locked">
-                    <h4>🔒 Iron</h4>
+                    <h4>🔒 <img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron</h4>
                     <p class="hint">Need 5+ markets</p>
                 </div>
                 {% endif %}
@@ -334,7 +334,7 @@
                 <!-- Weapons Trading -->
                 {% if state.market_quantity > 9 %}
                 <div class="trade-inline-section">
-                    <h4>⚔️ Weapons ({{ state.price_for_weapon }}💰/unit)</h4>
+                    <h4><img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons ({{ state.price_for_weapon }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/unit)</h4>
                     <div class="trade-controls">
                         <select name="quantity" id="trade_weapon_qty" class="setting-select">
                             <option value="1">1</option>
@@ -346,7 +346,7 @@
                 </div>
                 {% else %}
                 <div class="trade-inline-section trade-locked">
-                    <h4>🔒 Weapons</h4>
+                    <h4>🔒 <img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons</h4>
                     <p class="hint">Need 10+ markets</p>
                 </div>
                 {% endif %}
@@ -357,7 +357,7 @@
 
         <!-- Advancement Requirements -->
         <div class="advancement-panel">
-            <h3>📊 Advancement to {{ state.get_next_grade_title() }}</h3>
+            <h3><img src="/static/images/deg_castle5.png" alt="Advancement" style="height: 1em; vertical-align: middle;"> Advancement to {{ state.get_next_grade_title() }}</h3>
             {% if state.grade < 5 %}
             <div class="requirements-list">
                 {% for req in state.get_grade_requirements() %}

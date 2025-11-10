@@ -5,17 +5,17 @@
 {% block content %}
 <div class="main-menu">
     <div class="game-header">
-        <h1>🏰 Dark Emperor</h1>
+        <h1><img src="/static/images/deg_castle1.png" alt="Castle" style="height: 1.2em; vertical-align: middle;"> Dark Emperor</h1>
         <p class="subtitle">Rise from Baron to Emperor</p>
     </div>
 
     {% if show_game_over %}
     <div class="game-over-panel {% if won %}won{% else %}lost{% endif %}">
         {% if won %}
-        <h2>🎉 Congratulations!</h2>
+        <h2><img src="/static/images/deg_win.png" alt="Victory" style="height: 1.2em; vertical-align: middle;"> Congratulations!</h2>
         <p class="result-message">You have won!</p>
         {% else %}
-        <h2>😔 Game Over</h2>
+        <h2><img src="/static/images/deg_lost.png" alt="Lost" style="height: 1.2em; vertical-align: middle;"> Game Over</h2>
         <p class="result-message">You have lost!</p>
         {% endif %}
         <div class="score-display">
@@ -31,7 +31,7 @@
             hx-target="#main-content"
             hx-swap="innerHTML"
             class="menu-button primary">
-            🎮 Start New Game
+            Start New Game
         </button>
 
         <button
@@ -39,7 +39,7 @@
             hx-target="#main-content"
             hx-swap="innerHTML"
             class="menu-button">
-            🏆 Highscores
+            <img src="/static/images/deg_win.png" alt="Trophy" style="height: 1em; vertical-align: middle;"> Highscores
         </button>
 
         <button
@@ -47,7 +47,7 @@
             hx-target="#main-content"
             hx-swap="innerHTML"
             class="menu-button">
-            ℹ️ About
+            About
         </button>
     </div>
 
