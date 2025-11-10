@@ -236,7 +236,7 @@
             <!-- Military Panel -->
             <div class="panel">
                 <h3><img src="/static/images/deg_soldier.png" alt="Military" style="height: 1em; vertical-align: middle;"> Military</h3>
-                
+
                 <div class="trade-divider">
                     <p style="font-size: 0.9em;">Soldiers: {{ state.soldier_quantity }} | Weapons: {{ state.weapon_quantity }}</p>
                     <p class="hint" style="font-size: 0.85em; margin-top: 4px;">Cost: {{ state.soldier_price }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;"> | Need: 1 weapon + 1 citizen</p>
@@ -322,11 +322,12 @@
                             <option value="100">100</option>
                         </select>
                         <button hx-post="/game/trade/buy-iron" hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
+                        <button hx-post="/game/trade/sell-iron" hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
                     </div>
                 </div>
                 {% else %}
                 <div class="trade-inline-section trade-locked">
-                    <h4>🔒 <img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron</h4>
+                    <h4><img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron</h4>
                     <p class="hint">Need 5+ markets</p>
                 </div>
                 {% endif %}
@@ -342,11 +343,12 @@
                             <option value="100">100</option>
                         </select>
                         <button hx-post="/game/trade/buy-weapons" hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
+                        <button hx-post="/game/trade/sell-weapons" hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
                     </div>
                 </div>
                 {% else %}
                 <div class="trade-inline-section trade-locked">
-                    <h4>🔒 <img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons</h4>
+                    <h4><img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons</h4>
                     <p class="hint">Need 10+ markets</p>
                 </div>
                 {% endif %}
