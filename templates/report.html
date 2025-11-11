@@ -4,6 +4,20 @@
     <div class="report-content">
         <h2><img src="/static/images/deg_castle5.png" alt="Report" style="height: 1.2em; vertical-align: middle;"> Round Report - Year {{ state.year - 1 }}</h2>
 
+        {% if state.was_grade_up_before %}
+        <div class="report-section grade-advancement-section">
+            <h3 style="text-align: center;">
+                <img src="/static/images/de2.png" alt="Crown" style="height: 2em; vertical-align: middle;">
+            </h3>
+            <div style="text-align: center; font-size: 1.3em; font-weight: bold; margin: 1em 0;">
+                Congratulations, {{ state.get_grade_title() }} {{ state.user_name }}!
+            </div>
+            <div style="text-align: center; font-size: 1.1em; margin-bottom: 1em;">
+                You have been promoted to <strong>{{ state.get_grade_title() }}</strong>!
+            </div>
+        </div>
+        {% endif %}
+
         <div class="report-section">
             <h3><img src="/static/images/deg_gold.png" alt="Gold" style="height: 1em; vertical-align: middle;"> Income & Production</h3>
 

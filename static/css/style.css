@@ -1667,3 +1667,24 @@ img {
 .report-value.neutral {
     color: var(--gold-accent);
 }
+
+/* Grade advancement celebration */
+.grade-advancement-section {
+    background: linear-gradient(135deg, #fff9e6 0%, #fffef8 100%);
+    border: 3px solid var(--gold-accent);
+    border-radius: var(--radius-large);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+    animation: grade-glow 2s ease-in-out;
+}
+
+@keyframes grade-glow {
+    0%,
+    100% {
+        box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(184, 134, 11, 0.4);
+    }
+}
