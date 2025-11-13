@@ -156,23 +156,23 @@
                 <div class="setting-item">
                     <label>Taxes:</label>
                     <select name="taxes_level" hx-post="/game/set-taxes" hx-target="body" hx-swap="innerHTML" class="setting-select">
-                        <option value="0" {% if state.taxes_level == 0 %}selected{% endif %}>None</option>
-                        <option value="1" {% if state.taxes_level == 1 %}selected{% endif %}>Very Low</option>
-                        <option value="2" {% if state.taxes_level == 2 %}selected{% endif %}>Low</option>
-                        <option value="3" {% if state.taxes_level == 3 %}selected{% endif %}>Medium</option>
-                        <option value="4" {% if state.taxes_level == 4 %}selected{% endif %}>High</option>
-                        <option value="5" {% if state.taxes_level == 5 %}selected{% endif %}>Very High</option>
+                        <option value="0" {% if state.taxes_level == 0 %}selected{% endif %}>None (0 gold)</option>
+                        <option value="1" {% if state.taxes_level == 1 %}selected{% endif %}>Very Low ({{ (state.man_quantity * 1 * 10 / 30) }} gold)</option>
+                        <option value="2" {% if state.taxes_level == 2 %}selected{% endif %}>Low ({{ (state.man_quantity * 2 * 10 / 30) }} gold)</option>
+                        <option value="3" {% if state.taxes_level == 3 %}selected{% endif %}>Medium ({{ (state.man_quantity * 3 * 10 / 30) }} gold)</option>
+                        <option value="4" {% if state.taxes_level == 4 %}selected{% endif %}>High ({{ (state.man_quantity * 4 * 10 / 30) }} gold)</option>
+                        <option value="5" {% if state.taxes_level == 5 %}selected{% endif %}>Very High ({{ (state.man_quantity * 5 * 10 / 30) }} gold)</option>
                     </select>
                 </div>
                 <div class="setting-item">
                     <label>Food Rations:</label>
                     <select name="food_supply" hx-post="/game/set-food-supply" hx-target="body" hx-swap="innerHTML" class="setting-select">
-                        <option value="0" {% if state.food_supply == 0 %}selected{% endif %}>None</option>
-                        <option value="1" {% if state.food_supply == 1 %}selected{% endif %}>Very Low</option>
-                        <option value="2" {% if state.food_supply == 2 %}selected{% endif %}>Low</option>
-                        <option value="3" {% if state.food_supply == 3 %}selected{% endif %}>Medium</option>
-                        <option value="4" {% if state.food_supply == 4 %}selected{% endif %}>High</option>
-                        <option value="5" {% if state.food_supply == 5 %}selected{% endif %}>Very High</option>
+                        <option value="0" {% if state.food_supply == 0 %}selected{% endif %}>None (0 food)</option>
+                        <option value="1" {% if state.food_supply == 1 %}selected{% endif %}>Very Low ({{ (state.man_quantity * (1 * 34 - 2) / 100) }} food)</option>
+                        <option value="2" {% if state.food_supply == 2 %}selected{% endif %}>Low ({{ (state.man_quantity * (2 * 34 - 2) / 100) }} food)</option>
+                        <option value="3" {% if state.food_supply == 3 %}selected{% endif %}>Medium ({{ (state.man_quantity * (3 * 34 - 2) / 100) }} food)</option>
+                        <option value="4" {% if state.food_supply == 4 %}selected{% endif %}>High ({{ (state.man_quantity * (4 * 34 - 2) / 100) }} food)</option>
+                        <option value="5" {% if state.food_supply == 5 %}selected{% endif %}>Very High ({{ (state.man_quantity * (5 * 34 - 2) / 100) }} food)</option>
                     </select>
                 </div>
             </div>
