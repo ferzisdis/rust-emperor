@@ -261,7 +261,6 @@ impl GameState {
         }
         self.gold -= self.price_for_farm as i32;
         self.farm_quantity += 1;
-        self.price_for_farm = (self.price_for_farm as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -271,7 +270,6 @@ impl GameState {
         }
         self.gold -= self.price_for_mine as i32;
         self.mine_quantity += 1;
-        self.price_for_mine = (self.price_for_mine as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -281,7 +279,6 @@ impl GameState {
         }
         self.gold -= self.price_for_smithy as i32;
         self.smithy_quantity += 1;
-        self.price_for_smithy = (self.price_for_smithy as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -291,7 +288,6 @@ impl GameState {
         }
         self.gold -= self.price_for_market as i32;
         self.market_quantity += 1;
-        self.price_for_market = (self.price_for_market as f32 * 1.5) as i32;
         Ok(())
     }
 
@@ -302,7 +298,6 @@ impl GameState {
         self.gold -= self.price_for_castle as i32;
         self.castle_level += 1;
         self.is_castle_upgrade_in_this_round = true;
-        self.price_for_castle = (self.price_for_castle as f32 * 2.0) as i32;
         Ok(())
     }
 
