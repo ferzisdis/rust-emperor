@@ -30,6 +30,18 @@
             </div>
             <span class="resource-divider">|</span>
             <div class="resource-inline">
+                <span class="resource-icon"><img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"></span>
+                <span class="resource-label">Iron</span>
+                <span class="resource-value">{{ state.iron_quantity }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
+                <span class="resource-icon"><img src="/static/images/deg_weapons.png" alt="Weapon" style="height: 1em; vertical-align: middle;"></span>
+                <span class="resource-label">Weapon</span>
+                <span class="resource-value">{{ state.weapon_quantity }}</span>
+            </div>
+            <span class="resource-divider">|</span>
+            <div class="resource-inline">
                 <span class="resource-icon"><img src="/static/images/deg_soldier.png" alt="Army" style="height: 1em; vertical-align: middle;"></span>
                 <span class="resource-label">Army</span>
                 <span class="resource-value">{{ state.soldier_quantity }}</span>
@@ -252,11 +264,11 @@
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
-                        <button 
-                            hx-post="/game/army/recruit" 
-                            hx-vals='js:{quantity: document.getElementById("recruit_qty").value}' 
-                            hx-target="body" 
-                            hx-swap="innerHTML" 
+                        <button
+                            hx-post="/game/army/recruit"
+                            hx-vals='js:{quantity: document.getElementById("recruit_qty").value}'
+                            hx-target="body"
+                            hx-swap="innerHTML"
                             class="btn btn-small"
                             {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
                             Recruit
@@ -274,11 +286,11 @@
                             <option value="50">50</option>
                             <option value="{{ state.soldier_quantity }}">All ({{ state.soldier_quantity }})</option>
                         </select>
-                        <button 
-                            hx-post="/game/army/discharge" 
-                            hx-vals='js:{quantity: document.getElementById("discharge_qty").value}' 
-                            hx-target="body" 
-                            hx-swap="innerHTML" 
+                        <button
+                            hx-post="/game/army/discharge"
+                            hx-vals='js:{quantity: document.getElementById("discharge_qty").value}'
+                            hx-target="body"
+                            hx-swap="innerHTML"
                             class="btn btn-small"
                             {% if state.soldier_quantity == 0 %}disabled{% endif %}>
                             Discharge

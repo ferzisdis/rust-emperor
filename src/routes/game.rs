@@ -178,6 +178,20 @@ async fn buy_iron(
     Redirect::to("/game")
 }
 
+async fn sell_iron(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.sell_iron(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game")
+}
+
 async fn buy_weapons(
     State(game_state): State<SharedGameState>,
     Form(form): Form<TradeForm>,
@@ -186,6 +200,20 @@ async fn buy_weapons(
 
     if let Some(ref mut game) = *state {
         let _ = game.buy_weapons(form.quantity as i16);
+    }
+
+    drop(state);
+    Redirect::to("/game")
+}
+
+async fn sell_weapons(
+    State(game_state): State<SharedGameState>,
+    Form(form): Form<TradeForm>,
+) -> impl IntoResponse {
+    let mut state = game_state.write().unwrap();
+
+    if let Some(ref mut game) = *state {
+        let _ = game.sell_weapons(form.quantity as i16);
     }
 
     drop(state);
@@ -449,7 +477,9 @@ pub fn game_routes() -> Router<SharedGameState> {
         .route("/game/trade/buy-food", post(buy_food))
         .route("/game/trade/sell-food", post(sell_food))
         .route("/game/trade/buy-iron", post(buy_iron))
+        .route("/game/trade/sell-iron", post(sell_iron))
         .route("/game/trade/buy-weapons", post(buy_weapons))
+        .route("/game/trade/sell-weapons", post(sell_weapons))
         .route("/game/army/recruit", post(recruit_soldiers))
         .route("/game/army/discharge", post(discharge_soldiers))
 }

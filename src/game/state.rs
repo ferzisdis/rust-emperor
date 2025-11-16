@@ -470,6 +470,21 @@ impl GameState {
         Ok(())
     }
 
+    pub fn sell_iron(&mut self, quantity: i16) -> Result<(), String> {
+        if self.market_quantity <= 4 {
+            return Err("Need more than 4 markets to trade iron!".to_string());
+        }
+
+        if self.iron_quantity < quantity {
+            return Err("Not enough iron!".to_string());
+        }
+
+        let cost = quantity as i32 * self.price_for_armor as i32;
+        self.gold += cost;
+        self.iron_quantity -= quantity;
+        Ok(())
+    }
+
     pub fn can_buy_weapons(&self, quantity: i16) -> bool {
         let cost = quantity as i32 * self.price_for_weapon as i32;
         self.gold >= cost && self.market_quantity > 9
@@ -491,6 +506,21 @@ impl GameState {
 
         self.gold -= cost;
         self.weapon_quantity += quantity;
+        Ok(())
+    }
+
+    pub fn sell_weapons(&mut self, quantity: i16) -> Result<(), String> {
+        if self.market_quantity <= 9 {
+            return Err("Need more than 9 markets to trade weapons!".to_string());
+        }
+
+        if self.weapon_quantity < quantity {
+            return Err("Not enough weapons!".to_string());
+        }
+
+        let cost = quantity as i32 * self.price_for_weapon as i32;
+        self.gold += cost;
+        self.weapon_quantity -= quantity;
         Ok(())
     }
 
