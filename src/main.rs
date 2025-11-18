@@ -1,4 +1,4 @@
-use axum::{routing::get, Router};
+use axum::Router;
 use std::sync::{Arc, RwLock};
 use tower::ServiceBuilder;
 use tower_http::{services::ServeDir, trace::TraceLayer};

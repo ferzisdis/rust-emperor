@@ -406,12 +406,6 @@ impl GameState {
         score
     }
 
-    // Trading methods
-    pub fn can_buy_food(&self, quantity: i32) -> bool {
-        let cost = (quantity / 100) * self.price_for_food as i32;
-        self.gold >= cost && self.market_quantity > 0
-    }
-
     pub fn buy_food(&mut self, quantity: i32) -> Result<(), String> {
         if self.market_quantity == 0 {
             return Err("No markets available!".to_string());
@@ -427,10 +421,6 @@ impl GameState {
         Ok(())
     }
 
-    pub fn can_sell_food(&self, quantity: i32) -> bool {
-        self.food_quantity >= quantity && self.market_quantity > 0
-    }
-
     pub fn sell_food(&mut self, quantity: i32) -> Result<(), String> {
         if self.market_quantity == 0 {
             return Err("No markets available!".to_string());
@@ -444,11 +434,6 @@ impl GameState {
         self.food_quantity -= quantity;
         self.gold += price;
         Ok(())
-    }
-
-    pub fn can_buy_iron(&self, quantity: i16) -> bool {
-        let cost = quantity as i32 * self.price_for_armor as i32;
-        self.gold >= cost && self.market_quantity > 4
     }
 
     pub fn buy_iron(&mut self, quantity: i16) -> Result<(), String> {
@@ -485,11 +470,6 @@ impl GameState {
         Ok(())
     }
 
-    pub fn can_buy_weapons(&self, quantity: i16) -> bool {
-        let cost = quantity as i32 * self.price_for_weapon as i32;
-        self.gold >= cost && self.market_quantity > 9
-    }
-
     pub fn buy_weapons(&mut self, quantity: i16) -> Result<(), String> {
         if self.market_quantity <= 9 {
             return Err("Need more than 9 markets to trade weapons!".to_string());
@@ -524,16 +504,6 @@ impl GameState {
         Ok(())
     }
 
-    pub fn can_recruit_soldiers(&self, quantity: i16) -> bool {
-        let cost = quantity as i32 * self.soldier_price as i32;
-        let has_enough_gold = self.gold >= cost;
-        let has_enough_weapons = self.weapon_quantity >= quantity;
-        let has_enough_citizens =
-            self.man_quantity - 200 >= self.soldier_quantity as i32 + quantity as i32;
-
-        has_enough_gold && has_enough_weapons && has_enough_citizens
-    }
-
     pub fn recruit_soldiers(&mut self, quantity: i16) -> Result<(), String> {
         if quantity <= 0 {
             return Err("Quantity must be positive!".to_string());
@@ -563,10 +533,6 @@ impl GameState {
         Ok(())
     }
 
-    pub fn can_discharge_soldiers(&self, quantity: i16) -> bool {
-        self.soldier_quantity >= quantity
-    }
-
     pub fn discharge_soldiers(&mut self, quantity: i16) -> Result<(), String> {
         if quantity <= 0 {
             return Err("Quantity must be positive!".to_string());
@@ -585,46 +551,9 @@ impl GameState {
         Ok(())
     }
 
-    pub fn max_recruitable_by_gold(&self) -> i32 {
-        self.gold / self.soldier_price as i32
-    }
-
-    pub fn max_recruitable_by_citizens(&self) -> i32 {
-        if self.man_quantity > 200 {
-            self.man_quantity - 200
-        } else {
-            0
-        }
-    }
-
     pub fn can_afford_soldier(&self) -> bool {
         self.gold >= self.soldier_price as i32
     }
-
-    pub fn get_available_trade_options(&self) -> Vec<TradeOption> {
-        let mut options = Vec::new();
-
-        if self.market_quantity > 0 {
-            options.push(TradeOption::Food);
-        }
-
-        if self.market_quantity > 4 {
-            options.push(TradeOption::Iron);
-        }
-
-        if self.market_quantity > 9 {
-            options.push(TradeOption::Weapons);
-        }
-
-        options
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-pub enum TradeOption {
-    Food,
-    Iron,
-    Weapons,
 }
 
 impl Default for GameState {

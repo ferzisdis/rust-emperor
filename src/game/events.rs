@@ -52,7 +52,7 @@ impl EventGenerator {
         Some(event)
     }
 
-    fn plague_event(state: &GameState) -> GameEvent {
+    fn plague_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let loss = rng.gen_range(50..150);
         let popularity_loss = rng.gen_range(5..15) as i8;
@@ -71,7 +71,7 @@ impl EventGenerator {
         }
     }
 
-    fn good_harvest_event(state: &GameState) -> GameEvent {
+    fn good_harvest_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let bonus = rng.gen_range(500..1500);
 
@@ -89,7 +89,7 @@ impl EventGenerator {
         }
     }
 
-    fn poor_harvest_event(state: &GameState) -> GameEvent {
+    fn poor_harvest_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let loss = rng.gen_range(300..800);
 
@@ -104,7 +104,7 @@ impl EventGenerator {
         }
     }
 
-    fn merchants_event(state: &GameState) -> GameEvent {
+    fn merchants_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let gold = rng.gen_range(200..600);
 
@@ -121,7 +121,7 @@ impl EventGenerator {
         }
     }
 
-    fn bandits_event(state: &GameState) -> GameEvent {
+    fn bandits_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let gold_loss = rng.gen_range(100..400);
         let pop_loss = rng.gen_range(20..60);
@@ -141,7 +141,7 @@ impl EventGenerator {
         }
     }
 
-    fn festival_event(state: &GameState) -> GameEvent {
+    fn festival_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let cost = rng.gen_range(150..350);
 
@@ -159,7 +159,7 @@ impl EventGenerator {
         }
     }
 
-    fn drought_event(state: &GameState) -> GameEvent {
+    fn drought_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let food_loss = rng.gen_range(400..1000);
 
@@ -177,7 +177,7 @@ impl EventGenerator {
         }
     }
 
-    fn immigrants_event(state: &GameState) -> GameEvent {
+    fn immigrants_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let immigrants = rng.gen_range(80..200);
 
@@ -195,7 +195,7 @@ impl EventGenerator {
         }
     }
 
-    fn gold_mine_event(state: &GameState) -> GameEvent {
+    fn gold_mine_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let gold = rng.gen_range(400..1000);
 
@@ -213,7 +213,7 @@ impl EventGenerator {
         }
     }
 
-    fn storm_event(state: &GameState) -> GameEvent {
+    fn storm_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let gold_loss = rng.gen_range(200..500);
         let pop_loss = rng.gen_range(10..40);
@@ -254,7 +254,7 @@ impl EventGenerator {
         }
     }
 
-    fn tax_revolt_event(state: &GameState) -> GameEvent {
+    fn tax_revolt_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let gold_loss = rng.gen_range(300..700);
 
@@ -272,7 +272,7 @@ impl EventGenerator {
         }
     }
 
-    fn wedding_event(state: &GameState) -> GameEvent {
+    fn wedding_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let cost = rng.gen_range(200..400);
 
@@ -328,7 +328,7 @@ impl EventGenerator {
         }
     }
 
-    fn bumper_crop_event(state: &GameState) -> GameEvent {
+    fn bumper_crop_event(_state: &GameState) -> GameEvent {
         let mut rng = rand::thread_rng();
         let bonus_food = rng.gen_range(800..2000);
         let bonus_gold = rng.gen_range(100..300);
