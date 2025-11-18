@@ -106,7 +106,7 @@
 }
 
 .castle-main-upgrade {
-    top: 28px;
+    top: -8px;
     left: calc(50%);
     transform: translateX(-50%);
     width: 44px;
