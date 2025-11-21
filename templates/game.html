@@ -301,69 +301,191 @@
 
             <!-- Trade Panel -->
             <div class="panel">
-                <h3><img src="/static/images/deg_market.png" alt="Trade" style="height: 1em; vertical-align: middle;"> Trade</h3>
                 {% if state.market_quantity == 0 %}
+                <h3><img src="/static/images/deg_market.png" alt="Trade" style="height: 1em; vertical-align: middle;"> Trade</h3>
                 <p class="hint">Build a market to trade!</p>
                 {% else %}
-                <div class="trade-divider">
-                    <p style="font-size: 0.9em;">Markets: {{ state.market_quantity }}</p>
-                </div>
-
-                <!-- Food Trading -->
-                <div class="trade-inline-section">
-                    <h4><img src="/static/images/deg_food.png" alt="Food" style="height: 1em; vertical-align: middle;"> Food ({{ state.price_for_food }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/100)</h4>
-                    <div class="trade-controls">
-                        <select name="quantity" id="trade_food_qty" class="setting-select">
-                            <option value="100">100</option>
-                            <option value="1000">1,000</option>
-                            <option value="10000">10,000</option>
-                        </select>
-                        <button hx-post="/game/trade/buy-food" hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
-                        <button hx-post="/game/trade/sell-food" hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
+                <!-- Trade Panel Header -->
+                <div class="trade-header">
+                    <div class="trade-header-left">
+                        <img src="/static/images/deg_market.png" alt="Trade" style="height: 1.2em; vertical-align: middle;">
+                        <h3>Trade</h3>
+                        <span class="trade-market-count">• {{ state.market_quantity }} market(s)</span>
+                    </div>
+                    <div class="trade-balance" id="player-balance">
+                        {{ state.gold }}<img src="/static/images/deg_gold.png" alt="Gold">
                     </div>
                 </div>
 
-                <!-- Iron Trading -->
-                {% if state.market_quantity > 4 %}
-                <div class="trade-inline-section">
-                    <h4><img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron ({{ state.price_for_armor }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/unit)</h4>
-                    <div class="trade-controls">
-                        <select name="quantity" id="trade_iron_qty" class="setting-select">
-                            <option value="1">1</option>
-                            <option value="10">10</option>
-                            <option value="100">100</option>
-                        </select>
-                        <button hx-post="/game/trade/buy-iron" hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
-                        <button hx-post="/game/trade/sell-iron" hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
+                <!-- Trade Goods List -->
+                <div class="trade-goods-list">
+                    <!-- Food Trading -->
+                    <div class="trade-good-item">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_food.png" alt="Food">
+                            </div>
+                            <span class="trade-good-name">Food</span>
+                            <div class="trade-good-details">
+                                {{ state.price_for_food }}<img src="/static/images/deg_gold.png" alt="Gold">/100 • In stock: {{ state.food_quantity }}
+                            </div>
+                        </div>
+                        <div class="trade-good-controls">
+                            <div class="trade-input-section">
+                                <input type="number" id="trade_food_qty" name="quantity" value="100" min="0" step="100">
+                                <div class="trade-quick-buttons">
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_food_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_food_qty'); input.value = 1000; input.dispatchEvent(new Event('input'));">1K</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_food_qty'); input.value = 10000; input.dispatchEvent(new Event('input'));">10K</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_food_qty'); input.value = Math.floor({{ state.gold }} / {{ state.price_for_food }}) * 100; input.dispatchEvent(new Event('input'));">MAX BUY</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_food_qty'); input.value = {{ state.food_quantity }}; input.dispatchEvent(new Event('input'));">MAX SELL</button>
+                                </div>
+                            </div>
+                            <div class="trade-action-buttons">
+                                <button 
+                                    hx-post="/game/trade/buy-food" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-buy"
+                                    id="buy_food_btn">
+                                    Buy
+                                </button>
+                                <button 
+                                    hx-post="/game/trade/sell-food" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-sell"
+                                    id="sell_food_btn">
+                                    Sell
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                {% else %}
-                <div class="trade-inline-section trade-locked">
-                    <h4><img src="/static/images/deg_iron.png" alt="Iron" style="height: 1em; vertical-align: middle;"> Iron</h4>
-                    <p class="hint">Need 5+ markets</p>
-                </div>
-                {% endif %}
 
-                <!-- Weapons Trading -->
-                {% if state.market_quantity > 9 %}
-                <div class="trade-inline-section">
-                    <h4><img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons ({{ state.price_for_weapon }}<img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">/unit)</h4>
-                    <div class="trade-controls">
-                        <select name="quantity" id="trade_weapon_qty" class="setting-select">
-                            <option value="1">1</option>
-                            <option value="10">10</option>
-                            <option value="100">100</option>
-                        </select>
-                        <button hx-post="/game/trade/buy-weapons" hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Buy</button>
-                        <button hx-post="/game/trade/sell-weapons" hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' hx-target="body" hx-swap="innerHTML" class="btn btn-small">Sell</button>
+                    <!-- Iron Trading -->
+                    {% if state.market_quantity > 4 %}
+                    <div class="trade-good-item">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_iron.png" alt="Iron">
+                            </div>
+                            <span class="trade-good-name">Iron</span>
+                            <div class="trade-good-details">
+                                {{ state.price_for_armor }}<img src="/static/images/deg_gold.png" alt="Gold">/unit • In stock: {{ state.iron_quantity }}/{{ state.trade_limit }}
+                            </div>
+                        </div>
+                        <div class="trade-good-controls">
+                            <div class="trade-input-section">
+                                <input type="number" id="trade_iron_qty" name="quantity" value="1" min="0" step="1">
+                                <div class="trade-quick-buttons">
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_iron_qty'); input.value = 1; input.dispatchEvent(new Event('input'));">1</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_iron_qty'); input.value = 10; input.dispatchEvent(new Event('input'));">10</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_iron_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_iron_qty'); input.value = Math.floor({{ state.gold }} / {{ state.price_for_armor }}); input.dispatchEvent(new Event('input'));">MAX BUY</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_iron_qty'); input.value = {{ state.iron_quantity }}; input.dispatchEvent(new Event('input'));">MAX SELL</button>
+                                </div>
+                            </div>
+                            <div class="trade-action-buttons">
+                                <button 
+                                    hx-post="/game/trade/buy-iron" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-buy"
+                                    id="buy_iron_btn">
+                                    Buy
+                                </button>
+                                <button 
+                                    hx-post="/game/trade/sell-iron" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-sell"
+                                    id="sell_iron_btn">
+                                    Sell
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                    {% else %}
+                    <div class="trade-good-item trade-good-locked">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_iron.png" alt="Iron">
+                            </div>
+                            <span class="trade-good-name">Iron</span>
+                            <span class="trade-good-lock">🔒</span>
+                        </div>
+                        <div class="trade-locked-text">Requires 5+ markets</div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Weapons Trading -->
+                    {% if state.market_quantity > 9 %}
+                    <div class="trade-good-item">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_weapons.png" alt="Weapons">
+                            </div>
+                            <span class="trade-good-name">Weapons</span>
+                            <div class="trade-good-details">
+                                {{ state.price_for_weapon }}<img src="/static/images/deg_gold.png" alt="Gold">/unit • In stock: {{ state.weapon_quantity }}/{{ state.trade_limit }}
+                            </div>
+                        </div>
+                        <div class="trade-good-controls">
+                            <div class="trade-input-section">
+                                <input type="number" id="trade_weapon_qty" name="quantity" value="1" min="0" step="1">
+                                <div class="trade-quick-buttons">
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_weapon_qty'); input.value = 1; input.dispatchEvent(new Event('input'));">1</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_weapon_qty'); input.value = 10; input.dispatchEvent(new Event('input'));">10</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_weapon_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_weapon_qty'); input.value = Math.floor({{ state.gold }} / {{ state.price_for_weapon }}); input.dispatchEvent(new Event('input'));">MAX BUY</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('trade_weapon_qty'); input.value = {{ state.weapon_quantity }}; input.dispatchEvent(new Event('input'));">MAX SELL</button>
+                                </div>
+                            </div>
+                            <div class="trade-action-buttons">
+                                <button 
+                                    hx-post="/game/trade/buy-weapons" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-buy"
+                                    id="buy_weapon_btn">
+                                    Buy
+                                </button>
+                                <button 
+                                    hx-post="/game/trade/sell-weapons" 
+                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-sell"
+                                    id="sell_weapon_btn">
+                                    Sell
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="trade-good-item trade-good-locked">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_weapons.png" alt="Weapons">
+                            </div>
+                            <span class="trade-good-name">Weapons</span>
+                            <span class="trade-good-lock">🔒</span>
+                        </div>
+                        <div class="trade-locked-text">Requires 10+ markets</div>
+                    </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                <div class="trade-inline-section trade-locked">
-                    <h4><img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 1em; vertical-align: middle;"> Weapons</h4>
-                    <p class="hint">Need 10+ markets</p>
-                </div>
-                {% endif %}
                 {% endif %}
             </div>
 
@@ -395,4 +517,126 @@
         </button>
     </div>
 </div>
+
+<script>
+    // Dynamic cost preview for trade buttons
+    (function() {
+        const priceForFood = {{ state.price_for_food }};
+        const priceForArmor = {{ state.price_for_armor }};
+        const priceForWeapon = {{ state.price_for_weapon }};
+        const currentGold = {{ state.gold }};
+        const currentFood = {{ state.food_quantity }};
+        const currentIron = {{ state.iron_quantity }};
+        const currentWeapons = {{ state.weapon_quantity }};
+
+        // Update food buttons
+        const foodInput = document.getElementById('trade_food_qty');
+        const buyFoodBtn = document.getElementById('buy_food_btn');
+        const sellFoodBtn = document.getElementById('sell_food_btn');
+
+        if (foodInput && buyFoodBtn && sellFoodBtn) {
+            function updateFoodButtons() {
+                const qty = parseInt(foodInput.value) || 0;
+                const cost = Math.floor(qty / 100) * priceForFood;
+                const income = Math.floor(qty / 100) * priceForFood;
+                
+                buyFoodBtn.textContent = `Buy (-${cost})`;
+                sellFoodBtn.textContent = `Sell (+${income})`;
+                
+                // Disable if insufficient resources
+                if (currentGold < cost) {
+                    buyFoodBtn.classList.add('disabled');
+                    buyFoodBtn.disabled = true;
+                } else {
+                    buyFoodBtn.classList.remove('disabled');
+                    buyFoodBtn.disabled = false;
+                }
+                
+                if (currentFood < qty) {
+                    sellFoodBtn.classList.add('disabled');
+                    sellFoodBtn.disabled = true;
+                } else {
+                    sellFoodBtn.classList.remove('disabled');
+                    sellFoodBtn.disabled = false;
+                }
+            }
+            
+            foodInput.addEventListener('input', updateFoodButtons);
+            foodInput.addEventListener('change', updateFoodButtons);
+            updateFoodButtons();
+        }
+
+        // Update iron buttons
+        const ironInput = document.getElementById('trade_iron_qty');
+        const buyIronBtn = document.getElementById('buy_iron_btn');
+        const sellIronBtn = document.getElementById('sell_iron_btn');
+
+        if (ironInput && buyIronBtn && sellIronBtn) {
+            function updateIronButtons() {
+                const qty = parseInt(ironInput.value) || 0;
+                const cost = qty * priceForArmor;
+                const income = qty * priceForArmor;
+                
+                buyIronBtn.textContent = `Buy (-${cost})`;
+                sellIronBtn.textContent = `Sell (+${income})`;
+                
+                if (currentGold < cost) {
+                    buyIronBtn.classList.add('disabled');
+                    buyIronBtn.disabled = true;
+                } else {
+                    buyIronBtn.classList.remove('disabled');
+                    buyIronBtn.disabled = false;
+                }
+                
+                if (currentIron < qty) {
+                    sellIronBtn.classList.add('disabled');
+                    sellIronBtn.disabled = true;
+                } else {
+                    sellIronBtn.classList.remove('disabled');
+                    sellIronBtn.disabled = false;
+                }
+            }
+            
+            ironInput.addEventListener('input', updateIronButtons);
+            ironInput.addEventListener('change', updateIronButtons);
+            updateIronButtons();
+        }
+
+        // Update weapon buttons
+        const weaponInput = document.getElementById('trade_weapon_qty');
+        const buyWeaponBtn = document.getElementById('buy_weapon_btn');
+        const sellWeaponBtn = document.getElementById('sell_weapon_btn');
+
+        if (weaponInput && buyWeaponBtn && sellWeaponBtn) {
+            function updateWeaponButtons() {
+                const qty = parseInt(weaponInput.value) || 0;
+                const cost = qty * priceForWeapon;
+                const income = qty * priceForWeapon;
+                
+                buyWeaponBtn.textContent = `Buy (-${cost})`;
+                sellWeaponBtn.textContent = `Sell (+${income})`;
+                
+                if (currentGold < cost) {
+                    buyWeaponBtn.classList.add('disabled');
+                    buyWeaponBtn.disabled = true;
+                } else {
+                    buyWeaponBtn.classList.remove('disabled');
+                    buyWeaponBtn.disabled = false;
+                }
+                
+                if (currentWeapons < qty) {
+                    sellWeaponBtn.classList.add('disabled');
+                    sellWeaponBtn.disabled = true;
+                } else {
+                    sellWeaponBtn.classList.remove('disabled');
+                    sellWeaponBtn.disabled = false;
+                }
+            }
+            
+            weaponInput.addEventListener('input', updateWeaponButtons);
+            weaponInput.addEventListener('change', updateWeaponButtons);
+            updateWeaponButtons();
+        }
+    })();
+</script>
 {% endblock %}
