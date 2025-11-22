@@ -164,7 +164,7 @@
         <div class="action-panels">
             <!-- Settings Panel -->
             <div class="panel">
-                <h3>⚙️ Settings</h3>
+                <h3><img src="/static/images/deg_farm.png" alt="Settings" style="height: 1em; vertical-align: middle;"> Settings</h3>
                 <div class="setting-item">
                     <label>Taxes:</label>
                     <select name="taxes_level" hx-post="/game/set-taxes" hx-target="body" hx-swap="innerHTML" class="setting-select">
@@ -250,7 +250,7 @@
                 <!-- Military Panel Header -->
                 <div class="trade-header">
                     <div class="trade-header-left">
-                        <img src="/static/images/deg_soldier.png" alt="Military" style="height: 1.2em; vertical-align: middle;">
+                        <img src="/static/images/deg_smithy.png" alt="Military" style="height: 1.2em; vertical-align: middle;">
                         <h3>Military</h3>
                         <span class="trade-market-count">• {{ state.soldier_quantity }} soldier(s)</span>
                     </div>
@@ -284,10 +284,10 @@
                                 </div>
                             </div>
                             <div class="trade-action-buttons">
-                                <button 
-                                    hx-post="/game/army/recruit" 
-                                    hx-vals='js:{quantity: document.getElementById("recruit_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/army/recruit"
+                                    hx-vals='js:{quantity: document.getElementById("recruit_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-buy"
@@ -322,10 +322,10 @@
                                 </div>
                             </div>
                             <div class="trade-action-buttons">
-                                <button 
-                                    hx-post="/game/army/discharge" 
-                                    hx-vals='js:{quantity: document.getElementById("discharge_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/army/discharge"
+                                    hx-vals='js:{quantity: document.getElementById("discharge_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-sell"
@@ -382,20 +382,20 @@
                                 </div>
                             </div>
                             <div class="trade-action-buttons">
-                                <button 
-                                    hx-post="/game/trade/buy-food" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/buy-food"
+                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-buy"
                                     id="buy_food_btn">
                                     Buy
                                 </button>
-                                <button 
-                                    hx-post="/game/trade/sell-food" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/sell-food"
+                                    hx-vals='js:{quantity: document.getElementById("trade_food_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-sell"
@@ -430,20 +430,20 @@
                                 </div>
                             </div>
                             <div class="trade-action-buttons">
-                                <button 
-                                    hx-post="/game/trade/buy-iron" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/buy-iron"
+                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-buy"
                                     id="buy_iron_btn">
                                     Buy
                                 </button>
-                                <button 
-                                    hx-post="/game/trade/sell-iron" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/sell-iron"
+                                    hx-vals='js:{quantity: document.getElementById("trade_iron_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-sell"
@@ -490,20 +490,20 @@
                                 </div>
                             </div>
                             <div class="trade-action-buttons">
-                                <button 
-                                    hx-post="/game/trade/buy-weapons" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/buy-weapons"
+                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-buy"
                                     id="buy_weapon_btn">
                                     Buy
                                 </button>
-                                <button 
-                                    hx-post="/game/trade/sell-weapons" 
-                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}' 
-                                    hx-target="body" 
+                                <button
+                                    hx-post="/game/trade/sell-weapons"
+                                    hx-vals='js:{quantity: document.getElementById("trade_weapon_qty").value}'
+                                    hx-target="body"
                                     hx-swap="innerHTML"
                                     hx-disabled-elt="this"
                                     class="btn btn-trade-sell"
@@ -553,7 +553,7 @@
     <!-- Fixed Footer with Finish Round Button -->
     <div class="game-footer-fixed">
         <button hx-post="/game/finish-round" hx-target="body" hx-swap="innerHTML" class="btn btn-large btn-finish-round">
-            ⏭️ Finish Round &amp; Continue
+            Finish Round &amp; Continue
         </button>
     </div>
 </div>
@@ -579,10 +579,10 @@
                 const qty = parseInt(foodInput.value) || 0;
                 const cost = Math.floor(qty / 100) * priceForFood;
                 const income = Math.floor(qty / 100) * priceForFood;
-                
+
                 buyFoodBtn.textContent = `Buy (-${cost})`;
                 sellFoodBtn.textContent = `Sell (+${income})`;
-                
+
                 // Disable if insufficient resources
                 if (currentGold < cost) {
                     buyFoodBtn.classList.add('disabled');
@@ -591,7 +591,7 @@
                     buyFoodBtn.classList.remove('disabled');
                     buyFoodBtn.disabled = false;
                 }
-                
+
                 if (currentFood < qty) {
                     sellFoodBtn.classList.add('disabled');
                     sellFoodBtn.disabled = true;
@@ -600,7 +600,7 @@
                     sellFoodBtn.disabled = false;
                 }
             }
-            
+
             foodInput.addEventListener('input', updateFoodButtons);
             foodInput.addEventListener('change', updateFoodButtons);
             updateFoodButtons();
@@ -616,10 +616,10 @@
                 const qty = parseInt(ironInput.value) || 0;
                 const cost = qty * priceForArmor;
                 const income = qty * priceForArmor;
-                
+
                 buyIronBtn.textContent = `Buy (-${cost})`;
                 sellIronBtn.textContent = `Sell (+${income})`;
-                
+
                 if (currentGold < cost) {
                     buyIronBtn.classList.add('disabled');
                     buyIronBtn.disabled = true;
@@ -627,7 +627,7 @@
                     buyIronBtn.classList.remove('disabled');
                     buyIronBtn.disabled = false;
                 }
-                
+
                 if (currentIron < qty) {
                     sellIronBtn.classList.add('disabled');
                     sellIronBtn.disabled = true;
@@ -636,7 +636,7 @@
                     sellIronBtn.disabled = false;
                 }
             }
-            
+
             ironInput.addEventListener('input', updateIronButtons);
             ironInput.addEventListener('change', updateIronButtons);
             updateIronButtons();
@@ -652,10 +652,10 @@
                 const qty = parseInt(weaponInput.value) || 0;
                 const cost = qty * priceForWeapon;
                 const income = qty * priceForWeapon;
-                
+
                 buyWeaponBtn.textContent = `Buy (-${cost})`;
                 sellWeaponBtn.textContent = `Sell (+${income})`;
-                
+
                 if (currentGold < cost) {
                     buyWeaponBtn.classList.add('disabled');
                     buyWeaponBtn.disabled = true;
@@ -663,7 +663,7 @@
                     buyWeaponBtn.classList.remove('disabled');
                     buyWeaponBtn.disabled = false;
                 }
-                
+
                 if (currentWeapons < qty) {
                     sellWeaponBtn.classList.add('disabled');
                     sellWeaponBtn.disabled = true;
@@ -672,7 +672,7 @@
                     sellWeaponBtn.disabled = false;
                 }
             }
-            
+
             weaponInput.addEventListener('input', updateWeaponButtons);
             weaponInput.addEventListener('change', updateWeaponButtons);
             updateWeaponButtons();
@@ -689,14 +689,14 @@
             function updateRecruitButtons() {
                 const qty = parseInt(recruitInput.value) || 0;
                 const cost = qty * soldierPrice;
-                
+
                 recruitBtn.textContent = `Recruit (-${cost})`;
-                
+
                 // Check all requirements: gold, weapons, and citizens (must keep 200)
                 const maxAffordable = Math.floor(currentGold / soldierPrice);
                 const availableCitizens = Math.max(0, currentCitizens - 200);
                 const canRecruit = qty <= maxAffordable && qty <= currentWeaponsForRecruit && qty <= availableCitizens;
-                
+
                 if (!canRecruit || currentCitizens <= 200 || currentWeaponsForRecruit === 0) {
                     recruitBtn.classList.add('disabled');
                     recruitBtn.disabled = true;
@@ -705,7 +705,7 @@
                     recruitBtn.disabled = false;
                 }
             }
-            
+
             recruitInput.addEventListener('input', updateRecruitButtons);
             recruitInput.addEventListener('change', updateRecruitButtons);
             updateRecruitButtons();
@@ -719,9 +719,9 @@
         if (dischargeInput && dischargeBtn) {
             function updateDischargeButtons() {
                 const qty = parseInt(dischargeInput.value) || 0;
-                
+
                 dischargeBtn.textContent = `Discharge (${qty})`;
-                
+
                 if (currentSoldiers < qty || currentSoldiers === 0) {
                     dischargeBtn.classList.add('disabled');
                     dischargeBtn.disabled = true;
@@ -730,7 +730,7 @@
                     dischargeBtn.disabled = false;
                 }
             }
-            
+
             dischargeInput.addEventListener('input', updateDischargeButtons);
             dischargeInput.addEventListener('change', updateDischargeButtons);
             updateDischargeButtons();
