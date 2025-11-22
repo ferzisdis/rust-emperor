@@ -199,7 +199,7 @@
                             <span>Castle: Level {{ state.castle_level }}</span>
                         </span>
                         {% if state.castle_level < 8 %}
-                        <button hx-post="/game/upgrade-castle" hx-target="body" hx-swap="innerHTML" class="btn btn-small" {% if !state.can_upgrade_castle() %}disabled{% endif %}>
+                        <button hx-post="/game/upgrade-castle" hx-target="body" hx-swap="innerHTML" hx-disabled-elt="this" class="btn btn-small" {% if !state.can_upgrade_castle() %}disabled{% endif %}>
                             Upgrade ({{ state.price_for_castle }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)
                         </button>
                         {% else %}
