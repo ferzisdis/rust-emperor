@@ -247,54 +247,94 @@
 
             <!-- Military Panel -->
             <div class="panel">
-                <h3><img src="/static/images/deg_soldier.png" alt="Military" style="height: 1em; vertical-align: middle;"> Military</h3>
-
-                <div class="trade-divider">
-                    <p style="font-size: 0.9em;">Soldiers: {{ state.soldier_quantity }} | Weapons: {{ state.weapon_quantity }}</p>
-                    <p class="hint" style="font-size: 0.85em; margin-top: 4px;">Cost: {{ state.soldier_price }} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;"> | Need: 1 weapon + 1 citizen</p>
-                </div>
-
-                <!-- Recruit Soldiers -->
-                <div class="trade-inline-section">
-                    <h4><img src="/static/images/deg_soldier.png" alt="Recruit" style="height: 1em; vertical-align: middle;"> Recruit Soldiers</h4>
-                    <div class="trade-controls">
-                        <select name="quantity" id="recruit_qty" class="setting-select">
-                            <option value="1">1</option>
-                            <option value="10">10</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        <button
-                            hx-post="/game/army/recruit"
-                            hx-vals='js:{quantity: document.getElementById("recruit_qty").value}'
-                            hx-target="body"
-                            hx-swap="innerHTML"
-                            class="btn btn-small"
-                            {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
-                            Recruit
-                        </button>
+                <!-- Military Panel Header -->
+                <div class="trade-header">
+                    <div class="trade-header-left">
+                        <img src="/static/images/deg_soldier.png" alt="Military" style="height: 1.2em; vertical-align: middle;">
+                        <h3>Military</h3>
+                        <span class="trade-market-count">• {{ state.soldier_quantity }} soldier(s)</span>
+                    </div>
+                    <div class="trade-balance" id="military-balance">
+                        {{ state.gold }}<img src="/static/images/deg_gold.png" alt="Gold">
                     </div>
                 </div>
 
-                <!-- Discharge Soldiers -->
-                <div class="trade-inline-section">
-                    <h4><img src="/static/images/deg_man.png" alt="Discharge" style="height: 1em; vertical-align: middle;"> Discharge Soldiers</h4>
-                    <div class="trade-controls">
-                        <select name="quantity" id="discharge_qty" class="setting-select">
-                            <option value="1">1</option>
-                            <option value="10">10</option>
-                            <option value="50">50</option>
-                            <option value="{{ state.soldier_quantity }}">All ({{ state.soldier_quantity }})</option>
-                        </select>
-                        <button
-                            hx-post="/game/army/discharge"
-                            hx-vals='js:{quantity: document.getElementById("discharge_qty").value}'
-                            hx-target="body"
-                            hx-swap="innerHTML"
-                            class="btn btn-small"
-                            {% if state.soldier_quantity == 0 %}disabled{% endif %}>
-                            Discharge
-                        </button>
+                <!-- Military Actions List -->
+                <div class="trade-goods-list">
+                    <!-- Recruit Soldiers -->
+                    <div class="trade-good-item">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_soldier.png" alt="Recruit">
+                            </div>
+                            <span class="trade-good-name">Recruit Soldiers</span>
+                            <div class="trade-good-details">
+                                {{ state.soldier_price }}<img src="/static/images/deg_gold.png" alt="Gold">/unit • Citizens: {{ state.man_quantity }} • Weapons: {{ state.weapon_quantity }}
+                            </div>
+                        </div>
+                        <div class="trade-good-controls">
+                            <div class="trade-input-section">
+                                <input type="number" id="recruit_qty" name="quantity" value="1" min="0" step="1">
+                                <div class="trade-quick-buttons">
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('recruit_qty'); input.value = 1; input.dispatchEvent(new Event('input'));">1</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('recruit_qty'); input.value = 10; input.dispatchEvent(new Event('input'));">10</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('recruit_qty'); input.value = 50; input.dispatchEvent(new Event('input'));">50</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('recruit_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('recruit_qty'); input.value = Math.min(Math.floor({{ state.gold }} / {{ state.soldier_price }}), {{ state.weapon_quantity }}, Math.max(0, {{ state.man_quantity }} - 200)); input.dispatchEvent(new Event('input'));">MAX</button>
+                                </div>
+                            </div>
+                            <div class="trade-action-buttons">
+                                <button 
+                                    hx-post="/game/army/recruit" 
+                                    hx-vals='js:{quantity: document.getElementById("recruit_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-buy"
+                                    id="recruit_soldier_btn"
+                                    {% if state.man_quantity <= 200 || state.weapon_quantity == 0 || !state.can_afford_soldier() %}disabled{% endif %}>
+                                    Recruit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discharge Soldiers -->
+                    <div class="trade-good-item">
+                        <div class="trade-good-info">
+                            <div class="trade-good-icon">
+                                <img src="/static/images/deg_man.png" alt="Discharge">
+                            </div>
+                            <span class="trade-good-name">Discharge Soldiers</span>
+                            <div class="trade-good-details">
+                                Returns soldiers to citizens • Current: {{ state.soldier_quantity }}
+                            </div>
+                        </div>
+                        <div class="trade-good-controls">
+                            <div class="trade-input-section">
+                                <input type="number" id="discharge_qty" name="quantity" value="1" min="0" step="1">
+                                <div class="trade-quick-buttons">
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 1; input.dispatchEvent(new Event('input'));">1</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 10; input.dispatchEvent(new Event('input'));">10</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 50; input.dispatchEvent(new Event('input'));">50</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
+                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = {{ state.soldier_quantity }}; input.dispatchEvent(new Event('input'));">MAX</button>
+                                </div>
+                            </div>
+                            <div class="trade-action-buttons">
+                                <button 
+                                    hx-post="/game/army/discharge" 
+                                    hx-vals='js:{quantity: document.getElementById("discharge_qty").value}' 
+                                    hx-target="body" 
+                                    hx-swap="innerHTML"
+                                    hx-disabled-elt="this"
+                                    class="btn btn-trade-sell"
+                                    id="discharge_soldier_btn"
+                                    {% if state.soldier_quantity == 0 %}disabled{% endif %}>
+                                    Discharge
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -636,6 +676,64 @@
             weaponInput.addEventListener('input', updateWeaponButtons);
             weaponInput.addEventListener('change', updateWeaponButtons);
             updateWeaponButtons();
+        }
+
+        // Update military recruit buttons
+        const recruitInput = document.getElementById('recruit_qty');
+        const recruitBtn = document.getElementById('recruit_soldier_btn');
+        const soldierPrice = {{ state.soldier_price }};
+        const currentCitizens = {{ state.man_quantity }};
+        const currentWeaponsForRecruit = {{ state.weapon_quantity }};
+
+        if (recruitInput && recruitBtn) {
+            function updateRecruitButtons() {
+                const qty = parseInt(recruitInput.value) || 0;
+                const cost = qty * soldierPrice;
+                
+                recruitBtn.textContent = `Recruit (-${cost})`;
+                
+                // Check all requirements: gold, weapons, and citizens (must keep 200)
+                const maxAffordable = Math.floor(currentGold / soldierPrice);
+                const availableCitizens = Math.max(0, currentCitizens - 200);
+                const canRecruit = qty <= maxAffordable && qty <= currentWeaponsForRecruit && qty <= availableCitizens;
+                
+                if (!canRecruit || currentCitizens <= 200 || currentWeaponsForRecruit === 0) {
+                    recruitBtn.classList.add('disabled');
+                    recruitBtn.disabled = true;
+                } else {
+                    recruitBtn.classList.remove('disabled');
+                    recruitBtn.disabled = false;
+                }
+            }
+            
+            recruitInput.addEventListener('input', updateRecruitButtons);
+            recruitInput.addEventListener('change', updateRecruitButtons);
+            updateRecruitButtons();
+        }
+
+        // Update military discharge buttons
+        const dischargeInput = document.getElementById('discharge_qty');
+        const dischargeBtn = document.getElementById('discharge_soldier_btn');
+        const currentSoldiers = {{ state.soldier_quantity }};
+
+        if (dischargeInput && dischargeBtn) {
+            function updateDischargeButtons() {
+                const qty = parseInt(dischargeInput.value) || 0;
+                
+                dischargeBtn.textContent = `Discharge (${qty})`;
+                
+                if (currentSoldiers < qty || currentSoldiers === 0) {
+                    dischargeBtn.classList.add('disabled');
+                    dischargeBtn.disabled = true;
+                } else {
+                    dischargeBtn.classList.remove('disabled');
+                    dischargeBtn.disabled = false;
+                }
+            }
+            
+            dischargeInput.addEventListener('input', updateDischargeButtons);
+            dischargeInput.addEventListener('change', updateDischargeButtons);
+            updateDischargeButtons();
         }
     })();
 </script>
