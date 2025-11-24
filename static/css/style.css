@@ -572,7 +572,7 @@ h3 {
     box-shadow: var(--shadow-medium), var(--inner-shadow);
 }
 
-.panel h3 {
+.panel > h3 {
     color: var(--text-main);
     font-size: clamp(1rem, 2.1vw, 1.15rem);
     margin-bottom: var(--spacing-md);

@@ -298,44 +298,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Discharge Soldiers -->
-                    <div class="trade-good-item">
-                        <div class="trade-good-info">
-                            <div class="trade-good-icon">
-                                <img src="/static/images/deg_man.png" alt="Discharge">
-                            </div>
-                            <span class="trade-good-name">Discharge Soldiers</span>
-                            <div class="trade-good-details">
-                                Returns soldiers to citizens • Current: {{ state.soldier_quantity }}
-                            </div>
-                        </div>
-                        <div class="trade-good-controls">
-                            <div class="trade-input-section">
-                                <input type="number" id="discharge_qty" name="quantity" value="1" min="0" step="1">
-                                <div class="trade-quick-buttons">
-                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 1; input.dispatchEvent(new Event('input'));">1</button>
-                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 10; input.dispatchEvent(new Event('input'));">10</button>
-                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 50; input.dispatchEvent(new Event('input'));">50</button>
-                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = 100; input.dispatchEvent(new Event('input'));">100</button>
-                                    <button type="button" class="btn-quick-amount" onclick="let input = document.getElementById('discharge_qty'); input.value = {{ state.soldier_quantity }}; input.dispatchEvent(new Event('input'));">MAX</button>
-                                </div>
-                            </div>
-                            <div class="trade-action-buttons">
-                                <button
-                                    hx-post="/game/army/discharge"
-                                    hx-vals='js:{quantity: document.getElementById("discharge_qty").value}'
-                                    hx-target="body"
-                                    hx-swap="innerHTML"
-                                    hx-disabled-elt="this"
-                                    class="btn btn-trade-sell"
-                                    id="discharge_soldier_btn"
-                                    {% if state.soldier_quantity == 0 %}disabled{% endif %}>
-                                    Discharge
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -580,8 +542,8 @@
                 const cost = Math.floor(qty / 100) * priceForFood;
                 const income = Math.floor(qty / 100) * priceForFood;
 
-                buyFoodBtn.textContent = `Buy (-${cost})`;
-                sellFoodBtn.textContent = `Sell (+${income})`;
+                buyFoodBtn.innerHTML = `Buy (-${cost} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
+                sellFoodBtn.innerHTML = `Sell (+${income} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
 
                 // Disable if insufficient resources
                 if (currentGold < cost) {
@@ -617,8 +579,8 @@
                 const cost = qty * priceForArmor;
                 const income = qty * priceForArmor;
 
-                buyIronBtn.textContent = `Buy (-${cost})`;
-                sellIronBtn.textContent = `Sell (+${income})`;
+                buyIronBtn.innerHTML = `Buy (-${cost} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
+                sellIronBtn.innerHTML = `Sell (+${income} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
 
                 if (currentGold < cost) {
                     buyIronBtn.classList.add('disabled');
@@ -653,8 +615,8 @@
                 const cost = qty * priceForWeapon;
                 const income = qty * priceForWeapon;
 
-                buyWeaponBtn.textContent = `Buy (-${cost})`;
-                sellWeaponBtn.textContent = `Sell (+${income})`;
+                buyWeaponBtn.innerHTML = `Buy (-${cost} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
+                sellWeaponBtn.innerHTML = `Sell (+${income} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">)`;
 
                 if (currentGold < cost) {
                     buyWeaponBtn.classList.add('disabled');
@@ -690,7 +652,7 @@
                 const qty = parseInt(recruitInput.value) || 0;
                 const cost = qty * soldierPrice;
 
-                recruitBtn.textContent = `Recruit (-${cost})`;
+                recruitBtn.innerHTML = `Recruit (-${cost} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">, -${qty} <img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 0.9em; vertical-align: middle;">, -${qty} <img src="/static/images/deg_man.png" alt="Citizen" style="height: 0.9em; vertical-align: middle;">)`;
 
                 // Check all requirements: gold, weapons, and citizens (must keep 200)
                 const maxAffordable = Math.floor(currentGold / soldierPrice);
@@ -719,8 +681,9 @@
         if (dischargeInput && dischargeBtn) {
             function updateDischargeButtons() {
                 const qty = parseInt(dischargeInput.value) || 0;
+                const cost = qty * soldierPrice;
 
-                dischargeBtn.textContent = `Discharge (${qty})`;
+                dischargeBtn.innerHTML = `Recruit (+${cost} <img src="/static/images/deg_gold.png" alt="Gold" style="height: 0.9em; vertical-align: middle;">, +${qty} <img src="/static/images/deg_weapons.png" alt="Weapons" style="height: 0.9em; vertical-align: middle;">, +${qty} <img src="/static/images/deg_soldier.png" alt="Soldier" style="height: 0.9em; vertical-align: middle;">)`;
 
                 if (currentSoldiers < qty || currentSoldiers === 0) {
                     dischargeBtn.classList.add('disabled');

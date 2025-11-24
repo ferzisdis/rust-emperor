@@ -2,7 +2,7 @@
 }}{% endblock %} {% block content %}
 <div class="report-view">
     <div class="report-content">
-        <h2><img src="/static/images/deg_castle5.png" alt="Report" style="height: 1.2em; vertical-align: middle;"> Round Report - Year {{ state.year - 1 }}</h2>
+        <h2>Round Report - Year {{ state.year - 1 }}</h2>
 
         {% if state.was_grade_up_before %}
         <div class="report-section grade-advancement-section">
@@ -19,7 +19,7 @@
         {% endif %}
 
         <div class="report-section">
-            <h3><img src="/static/images/deg_gold.png" alt="Gold" style="height: 1em; vertical-align: middle;"> Income & Production</h3>
+            <h3>Income & Production</h3>
 
             <div class="report-item">
                 <span class="report-label">Taxes Collected:</span>
