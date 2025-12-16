@@ -258,10 +258,10 @@ async fn finish_round(State(game_state): State<SharedGameState>) -> impl IntoRes
         // Apply round effects
         apply_round_effects(game);
 
-        // Generate random event (30% chance)
+        // Generate random event (50% chance)
         use rand::Rng;
         let mut rng = rand::thread_rng();
-        if rng.gen::<f32>() < 0.3 {
+        if rng.gen::<f32>() < 0.5 {
             if let Some(event) = EventGenerator::generate_random_event(game) {
                 // Store event for display in report
                 game.last_event_title = Some(event.title.clone());
